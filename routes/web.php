@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('regist.member_regist');
 });
+Route::get('/top', function () {
+    return view('top');
+})->name('top');
+
+Route::post('/regist/confirm', 'RegistController@check')->name('confirm');
+Route::post('/regist/complete', 'RegistController@regist')->name('complete');
