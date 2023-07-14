@@ -12,11 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('regist.member_regist');
+    return view('welcome');
 });
-Route::get('/top', function () {
-    return view('top');
-})->name('top');
 
-Route::post('/regist/confirm', 'RegistController@check')->name('confirm');
-Route::post('/regist/complete', 'RegistController@regist')->name('complete');
+Auth::routes();
+
+Route::get('regist/complete', 'Auth\RegisterController@showRegistCompleteForm');
+
+Route::post('register/confirm', 'Auth\RegisterController@toConfirmForm')->name('register.confirm');
