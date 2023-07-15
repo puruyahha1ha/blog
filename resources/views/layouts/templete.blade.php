@@ -9,7 +9,7 @@
     @yield('head')
 </head>
 <body>
-    <header>
+    <header class="@yield('header_class')">
         @yield('header')
     </header>
     <main>

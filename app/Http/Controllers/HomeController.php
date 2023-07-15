@@ -23,10 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('auth.register_complete');
-    }
-    public function top()
-    {
-        return view('welcome');
+        return view('home');
     }
 }

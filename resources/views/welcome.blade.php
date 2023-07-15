@@ -1,5 +1,8 @@
 @extends('layouts.templete')
 @section('title', 'トップ画面')
+@auth
+    @section('header_class', 'login_header')
+@endauth
 @section('header')
     @if (Route::has('login'))
         @auth

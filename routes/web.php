@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('regist/complete', 'Auth\RegisterController@showRegistCompleteForm');
 
 Route::post('register/confirm', 'Auth\RegisterController@toConfirmForm')->name('register.confirm');
+
+Route::get('password/email/complete', 'Auth\ForgotPasswordController@toEmailComplete')->name('email.complete');
