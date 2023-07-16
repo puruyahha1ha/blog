@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}
 
 @extends('layouts.templete')
 @section('title', 'パスワード再設定画面')
@@ -60,14 +60,14 @@
 
         <div class="reset_email_form">
             {{-- メールアドレス --}}
-            <div class="form_row" style="margin: 100px 0">
+            <div class="form_row" @error('email') @else style="margin: 100px 0"@enderror>
                 <p>メールアドレス</p>
                 <input type="text" name="email" value="{{ old('email') }}">
             </div>
 
             {{-- メールアドレスのエラーメッセージ --}}
             @error('email')
-                <div class="error">{{ $message }}</div>
+                <div class="error" style="margin-bottom: 100px">{{ $message }}</div>
             @enderror
 
             <div class="button">
@@ -78,7 +78,7 @@
     </form>
 
     <div class="button">
-        <a href="/" class="submit_re" style="margin-top: 0px">トップに戻る</a>
+        <a href="/" class="submit_re" style="margin-top: 0px; margin-bottom: 20px;">トップに戻る</a>
     </div>
 
 @endsection
