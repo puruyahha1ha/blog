@@ -5,9 +5,11 @@ body {
     background-color: rgb(248, 226, 159);
     margin: 0;
 }
+
 h1 {
     text-align: center;
 }
+
 .form_row,
 .name,
 .gender {
@@ -18,7 +20,9 @@ h1 {
 
 .form_row p,
 .name p,
-.gender p {
+.gender p,
+.form_row_img p,
+.form_row_text p {
     width: 200px;
     margin: 0 20px 0 0;
 }
@@ -36,7 +40,11 @@ span {
     margin: auto 10px;
 }
 
-.error {
+.error,
+.error1,
+.error2,
+.error3,
+.error4 {
     text-align: center;
     color: red;
 }
@@ -117,4 +125,56 @@ header a {
 .forget_pass {
     text-decoration: none;
     color: blue;
+}
+
+/* トップ画面 */
+.buttons {
+    display: flex;
+}
+
+/* 商品登録 */
+#category_id,
+#subcategory_id {
+    width: 150px;
+}
+
+#subcategory_id {
+    margin-left: 30px;
+}
+
+#image_1,
+#image_2,
+#image_3,
+#image_4 {
+    display: none;
+}
+
+.upload_button {
+    width: 150px;
+    height: 50px;
+    color: orange;
+    border: orange solid 2px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px;
+    background-color: white;
+}
+
+.form_row_img {
+    display: flex;
+}
+
+.img_block {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_row_img label {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.form_row_text {
+    display: flex;
+    margin: 20px 0;
 }
