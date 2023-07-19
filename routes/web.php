@@ -33,3 +33,5 @@ Route::post('product/upload', 'ProductController@upload');
 Route::post('product/confirm', 'ProductController@toConfirmForm')->name('product.confirm');
 
 Route::post('product/complete', 'ProductController@complete')->name('product.complete');
+
+Route::get('list', 'ListController@toList')->name('list');

@@ -108,6 +108,6 @@ class ProductController extends Controller
         // 二重送信防止
         $request->session()->regenerateToken();
 
-        return view('welcome');
+        return redirect('/');
     }
 }

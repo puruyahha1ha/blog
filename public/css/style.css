@@ -178,3 +178,13 @@ header a {
     display: flex;
     margin: 20px 0;
 }
+
+/* 商品一覧 */
+.serach_button {
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    margin-bottom: 20px;
+}
