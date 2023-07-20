@@ -24,6 +24,7 @@ Route::post('register/confirm', 'Auth\RegisterController@toConfirmForm')->name('
 Route::get('password/email/complete', 'Auth\ForgotPasswordController@toEmailComplete')->name('email.complete');
 
 Route::get('product', 'ProductController@showRegistProductForm')->name('product');
+
 Route::post('product', 'ProductController@showRegistProductForm');
 
 Route::post('product/category', 'ProductController@fetch');
@@ -35,3 +36,7 @@ Route::post('product/confirm', 'ProductController@toConfirmForm')->name('product
 Route::post('product/complete', 'ProductController@complete')->name('product.complete');
 
 Route::get('list', 'ListController@toList')->name('list');
+
+Route::post('list', 'ListController@search')->name('list.search');
+
+Route::get('list/detail', 'ListController@toDetail')->name('list.detail');

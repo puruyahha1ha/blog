@@ -43,7 +43,9 @@ class ProductController extends Controller
      */
     public function showRegistProductForm()
     {
+
         $product_categories = DB::table('product_categories')->orderBy('id')->get();
+
         return view('products.product_regist', ['product_categories' => $product_categories]);
     }
 
@@ -108,6 +110,6 @@ class ProductController extends Controller
         // 二重送信防止
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('list');
     }
 }

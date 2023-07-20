@@ -5,12 +5,12 @@
 @section('header')
     <p>商品一覧</p>
     @auth
-        <a href="{{ route('product') }}">新規商品登録</a>
+        <a href="{{ route('product', ['from' => 'list']) }}">新規商品登録</a>
     @endauth
 @endsection
 @section('main')
     {{-- 検索フォーム --}}
-    <form action="" method="post">
+    <form action="{{ route('list.search') }}" method="post" id="search_form">
         @csrf
         {{-- カテゴリ --}}
         <div class="form_row">
@@ -58,6 +58,47 @@
         </div>
     </form>
 
+    {{-- 商品一覧 --}}
+    <div class="list">
+        @foreach ($products as $val)
+            <div class="list_row">
+                {{-- 写真 --}}
+                @for ($i = 1; $i <= 4; $i++)
+                    @php
+                        $culum_name = "image_$i";
+                    @endphp
+                    @if (is_null($val->$culum_name))
+                        @if ($culum_name == 'image_4')
+                            <div class="empty" style="width: 200px; height: 200px">no image</div>
+                        @endif
+                        @continue
+                    @else
+                        <img src="{{ asset($val->$culum_name) }}" style="width: 200px; height: 200px">
+                        @break
+                    @endif
+                @endfor
+
+                {{-- 商品情報 --}}
+                <div class="information">
+                    <p>{{ $val->main_name }}>{{ $val->sub_name }}</p>
+                    <a href="">{{ $val->name }}</a>
+                </div>
+
+                {{-- 詳細 --}}
+                <div class="detail">
+                    <a href="{{ route('list.detail') }}">詳細</a>
+                </div>
+            </div>
+        @endforeach
+
+        {{-- ペジネーション --}}
+        <div class="links">
+            {{ $products->links() }}
+        </div>
+        
+    </div>
+    
+    {{-- 戻る --}}
     <div class="button">
         <a href="/" class="submit_re">トップに戻る</a>
     </div>

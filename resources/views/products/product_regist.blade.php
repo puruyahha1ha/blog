@@ -121,9 +121,15 @@
         </div>
     </form>
 
-    <div class="button">
-        <a href="/" class="submit_re" style="margin-top: 0px">トップに戻る</a>
-    </div>
+    @if (!empty(request()->query('from')))
+        <div class="button">
+            <a href="{{ route('list') }}" class="submit_re" style="margin-top: 0px">商品一覧に戻る</a>
+        </div>
+    @else
+        <div class="button">
+            <a href="/" class="submit_re" style="margin-top: 0px">トップに戻る</a>
+        </div>
+    @endif
 
     {{-- jsファイルの読み込み --}}
     <script src="{{ asset('js/script.js') }}"></script>
