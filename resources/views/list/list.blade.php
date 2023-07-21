@@ -65,15 +65,15 @@
                 {{-- 写真 --}}
                 @for ($i = 1; $i <= 4; $i++)
                     @php
-                        $culum_name = "image_$i";
+                        $colum_name = "image_$i";
                     @endphp
-                    @if (is_null($val->$culum_name))
-                        @if ($culum_name == 'image_4')
+                    @if (is_null($val->$colum_name))
+                        @if ($colum_name == 'image_4')
                             <div class="empty" style="width: 200px; height: 200px">no image</div>
                         @endif
                         @continue
                     @else
-                        <img src="{{ asset($val->$culum_name) }}" style="width: 200px; height: 200px">
+                        <img src="{{ asset($val->$colum_name) }}" style="width: 200px; height: 200px">
                         @break
                     @endif
                 @endfor
@@ -81,12 +81,21 @@
                 {{-- 商品情報 --}}
                 <div class="information">
                     <p>{{ $val->main_name }}>{{ $val->sub_name }}</p>
-                    <a href="">{{ $val->name }}</a>
+                    <a href="{{ route('list.detail', ['id' => $val->id]) }}">{{ $val->name }}</a>
+                    @if (!empty($avgs["$val->id"]))
+                        @foreach (Config('master.stars') as $key => $star)
+                            @if ($key == $avgs["$val->id"])
+                                <span>{{ $star }}　{{ $key }}</span>
+                            @endif
+                        @endforeach
+                    @else
+                        <span>評価なし</span>
+                    @endif
                 </div>
 
                 {{-- 詳細 --}}
                 <div class="detail">
-                    <a href="{{ route('list.detail') }}">詳細</a>
+                    <a href="{{ route('list.detail', ['id' => $val->id]) }}">詳細</a>
                 </div>
             </div>
         @endforeach

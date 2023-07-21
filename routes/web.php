@@ -40,3 +40,13 @@ Route::get('list', 'ListController@toList')->name('list');
 Route::post('list', 'ListController@search')->name('list.search');
 
 Route::get('list/detail', 'ListController@toDetail')->name('list.detail');
+
+Route::get('list/back', 'ListController@listBack')->name('list.back');
+
+Route::get('list/register', 'ListController@toRegister')->name('list.register');
+
+Route::get('list/review', 'ListController@toReview')->name('list.review');
+
+Route::post('list/confirm', 'ListController@toConfirmForm')->name('review.confirm');
+
+Route::post('list/complete', 'ListController@complete')->name('review.complete');

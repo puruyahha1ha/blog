@@ -228,9 +228,8 @@ header a {
 }
 
 .information a {
-    pointer-events: none;
     text-decoration: none;
-    color: black;
+    color: blue;
     margin-top: 20px;
 }
 
@@ -252,10 +251,12 @@ header a {
     border: blue solid 2px;
     margin-bottom: 20px;
 }
+
 .links {
     display: flex;
     justify-content: flex-end;
 }
+
 ul.pagination {
     display: flex;
     justify-content: space-evenly;
@@ -265,4 +266,140 @@ ul.pagination {
 
 li span {
     margin: 0;
+}
+
+/* 商品詳細 */
+.detail_row {
+    display: flex;
+    align-items: center;
+}
+
+.detail_row .date {
+    margin-left: 50px;
+}
+
+.detail_row img {
+    margin-right: 30px;
+}
+
+.detail_row_colum {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail_row_colum a {
+    text-decoration: none;
+    color: blue;
+}
+
+.detail_button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detail_button .button,
+.detail_button button {
+    display: flex;
+    text-decoration: none;
+    width: 150px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(100, 100, 255);
+    color: white;
+    border-radius: 10px;
+    border: blue solid 2px;
+    margin-bottom: 20px;
+    margin: 20px;
+}
+
+.detail_button a {
+    display: flex;
+    text-decoration: none;
+    width: 300px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: rgb(100, 100, 255);
+    border-radius: 10px;
+    border: rgb(100, 100, 255) solid 2px;
+    margin-bottom: 20px;
+    margin: 20px;
+}
+
+/* 商品レビュー登録画面 */
+.product_detail {
+    display: flex;
+    border-bottom: black solid 1px;
+}
+
+.product_detail span {
+    margin: 0;
+}
+
+select#evaluation {
+    width: 50px;
+}
+
+.form_row_comment {
+    display: flex;
+    margin: 20px 0;
+}
+
+.form_row_comment p {
+    width: 200px;
+    margin: 0 20px 0 0;
+}
+
+.list_submit {
+    display: flex;
+    text-decoration: none;
+    width: 200px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(100, 100, 255);
+    color: white;
+    border-radius: 10px;
+    border: rgb(100, 100, 255) solid 2px;
+    margin-bottom: 20px;
+    margin: 20px;
+}
+
+.detail_button_re button,
+.detail_button_re a {
+    display: flex;
+    text-decoration: none;
+    width: 200px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: rgb(100, 100, 255);
+    border-radius: 10px;
+    border: blue solid 2px;
+    margin: auto;
+}
+
+/* 商品レビュー一覧画面 */
+
+.review_information {
+    display: flex;
+}
+
+.review_information p {
+    width: 200px;
+}
+
+.review_row {
+    border-bottom: black solid 1px;
+}
+
+.product_comment {
+    display: flex;
+}
+
+.product_comment p {
+    width: 200px;
 }

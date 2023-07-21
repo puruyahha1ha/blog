@@ -152,7 +152,9 @@ return [
         'gender' => '性別',
         'password' => 'パスワード',
         'password_confirmation' => 'パスワード確認',
-        'email' => 'メールアドレス'
+        'email' => 'メールアドレス',
+        'evaluation' => '商品評価',
+        'comment' => '商品コメント',
     ],
 
 ];
