@@ -12,9 +12,13 @@ $('#category_id').change(function () {
     }).done(function (data) {
         $('#subcategory_id option').remove();
 
+        $('#subcategory_id').append($('<option>').text('選択してください').attr('value', 0))
+
+        console.log(data);
         $.each(data, function (key, value) {
             $('#subcategory_id').append($('<option>').text(value.name).attr('value', value['id']))
-        })
+        });
+
     })
 })
 // 写真１

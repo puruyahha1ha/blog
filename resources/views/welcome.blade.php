@@ -10,6 +10,7 @@
             <div class="buttons">
                 <a href="{{ route('list') }}">商品一覧</a>
                 <a href="{{ route('product') }}">新規商品登録</a>
+                <a href="{{ route('mypage') }}">マイページ</a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     ログアウト

@@ -50,3 +50,5 @@ Route::get('list/review', 'ListController@toReview')->name('list.review');
 Route::post('list/confirm', 'ListController@toConfirmForm')->name('review.confirm');
 
 Route::post('list/complete', 'ListController@complete')->name('review.complete');
+
+Route::get('mypage', 'ListController@complete')->name('mypage');
