@@ -68,9 +68,9 @@
     {{-- 戻る --}}
     <div class="detail_button">
         @if (!empty(request()->query('status')))
+            <button onclick="history.back()">商品一覧に戻る</button>
+        @else
             <a href="{{ route('list') }}" class="button">商品一覧に戻る</button>
-            @else
-                <button onclick="history.back()">商品一覧に戻る</button>
         @endif
     </div>
 

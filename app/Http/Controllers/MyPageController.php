@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MyPage extends Controller
+class MyPageController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -17,6 +17,6 @@ class MyPage extends Controller
     }
 
     public function toMyPage() {
-        return;
+        return view('mypages.mypage');
     }
 }

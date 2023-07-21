@@ -28,7 +28,17 @@
         {{-- 商品名・評価 --}}
         <div class="product_text">
             <p>{{ $product->name }}</p>
-            <span>総合評価　</span>
+            <span>総合評価 　
+                @if (!empty($avg_evaluation))
+                    @foreach (Config('master.stars') as $key => $star)
+                        @if ($key == ceil($avg_evaluation))
+                            {{ $star }}　{{ $key }}
+                        @endif
+                    @endforeach
+                @else
+                    評価なし
+                @endif
+            </span>
         </div>
 
     </div>

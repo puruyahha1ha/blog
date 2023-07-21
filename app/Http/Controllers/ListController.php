@@ -134,8 +134,6 @@ class ListController extends Controller
 
     public function toRegister(Request $request)
     {
-        $this->middleware('auth');
-
         $id = $request->id;
 
         $product = $this->searchProduct($id);
@@ -164,8 +162,9 @@ class ListController extends Controller
         $id = $request->id;
 
         $product = $this->searchProduct($id);
+        $avg_evaluation = $this->avgEvaluation($id);
 
-        return view('list.confirm', ['inputs' => $inputs, 'product' => $product]);
+        return view('list.confirm', ['inputs' => $inputs, 'product' => $product, 'avg_evaluation' => $avg_evaluation]);
     }
 
     public function complete(Request $request)

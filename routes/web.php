@@ -43,7 +43,8 @@ Route::get('list/detail', 'ListController@toDetail')->name('list.detail');
 
 Route::get('list/back', 'ListController@listBack')->name('list.back');
 
-Route::get('list/register', 'ListController@toRegister')->name('list.register');
+Route::get('list/register', 'ListController@toRegister')->name('list.register')->middleware('auth');
+
 
 Route::get('list/review', 'ListController@toReview')->name('list.review');
 
@@ -51,4 +52,4 @@ Route::post('list/confirm', 'ListController@toConfirmForm')->name('review.confir
 
 Route::post('list/complete', 'ListController@complete')->name('review.complete');
 
-Route::get('mypage', 'ListController@complete')->name('mypage');
+Route::get('mypage', 'MyPageController@toMyPage')->name('mypage');

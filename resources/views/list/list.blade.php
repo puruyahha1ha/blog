@@ -81,7 +81,7 @@
                 {{-- 商品情報 --}}
                 <div class="information">
                     <p>{{ $val->main_name }}>{{ $val->sub_name }}</p>
-                    <a href="{{ route('list.detail', ['id' => $val->id]) }}">{{ $val->name }}</a>
+                    <a href="{{ route('list.detail', ['id' => $val->id, 'status' => 'fromList']) }}">{{ $val->name }}</a>
                     @if (!empty($avgs["$val->id"]))
                         @foreach (Config('master.stars') as $key => $star)
                             @if ($key == $avgs["$val->id"])
@@ -95,7 +95,7 @@
 
                 {{-- 詳細 --}}
                 <div class="detail">
-                    <a href="{{ route('list.detail', ['id' => $val->id]) }}">詳細</a>
+                    <a href="{{ route('list.detail', ['id' => $val->id, 'status' => 'fromList']) }}">詳細</a>
                 </div>
             </div>
         @endforeach

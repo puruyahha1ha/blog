@@ -16,7 +16,7 @@
 
     {{-- 商品詳細へ --}}
     <div class="detail_button_re">
-        <a href="{{ route('list.detail', ['id' => $id, 'status' => 'formComplete']) }}">商品詳細に戻る</a>
+        <a href="{{ route('list.detail', ['id' => $id]) }}">商品詳細に戻る</a>
     </div>
 
 @endsection
