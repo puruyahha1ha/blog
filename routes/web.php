@@ -73,6 +73,11 @@ Route::get('mypage/email/showemail', 'MyPageController@showEmail')->name('mypage
 Route::post('mypage/email/complete', 'MyPageController@emailUpdateComplete')->name('mypage.email.complete');
 
 Route::get('mypage/control', 'MyPageController@toReviewControl')->name('mypage.control');
+
 Route::get('mypage/control/update', 'MyPageController@toReviewUpdate')->name('mypage.control.update');
+Route::post('mypage/control/confirm', 'MyPageController@toReviewConfirm')->name('mypage.control.confirm');
+Route::post('mypage/control/complete', 'MyPageController@reviewComplete')->name('mypage.control.complete');
+
 Route::get('mypage/control/delete', 'MyPageController@toReviewDelete')->name('mypage.control.delete');
+Route::post('mypage/control/delete/complete', 'MyPageController@reviewDeleteComplete')->name('mypage.control.delete.complete');
 

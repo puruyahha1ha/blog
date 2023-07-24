@@ -1,4 +1,3 @@
-@dd($reviews[1])
 @extends('layouts.templete')
 @section('title', '商品レビュー管理')
 @section('header_class', 'login_header')
@@ -33,23 +32,22 @@
                 {{-- 商品情報 --}}
                 <div class="information" style="width: auto">
                     <p>{{ $val->main_name }}>{{ $val->sub_name }}</p>
-                    <a
-                        href="{{ route('list.detail', ['id' => $val->id, 'status' => 'fromList']) }}">{{ $val->name }}</a>
+                    <span style="color: blue">{{ $val->name }}</span>
                     @foreach (Config('master.stars') as $key => $star)
                         @if ($key == $val->evaluation)
                             <span>{{ $star }}　{{ $key }}</span>
                         @endif
                     @endforeach
-                    <span>{{ Str::limit($val->comment, 16, '...') }}</span>
+                    <span>{{ Str::limit($val->comment, 32, '...') }}</span>
 
                     {{-- レビュー編集・削除 --}}
                     <div class="buttons">
                         <div class="detail">
-                            <a href="{{ route('mypage.control.update', ['id' => $val->id]) }}"
+                            <a href="{{ route('mypage.control.update', ['id' => $val->id, 'product_id' => $val->product_id]) }}"
                                 style="width: 150px; margin-right: 20px">レビュー編集</a>
                         </div>
                         <div class="detail">
-                            <a href="{{ route('mypage.control.delete', ['id' => $val->id]) }}"
+                            <a href="{{ route('mypage.control.delete', ['id' => $val->id, 'product_id' => $val->product_id]) }}"
                                 style="width: 150px">レビュー削除</a>
                         </div>
                     </div>

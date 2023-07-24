@@ -28,7 +28,7 @@
     {{-- 商品名・評価 --}}
     <div class="product_text">
         <p>{{ $product->name }}</p>
-        <span>総合評価 　
+        <span>総合評価
             @if (!empty($avg_evaluation))
                 @foreach (Config('master.stars') as $key => $star)
                     @if ($key == ceil($avg_evaluation))
@@ -44,7 +44,7 @@
 </div>
 
 {{-- 登録フォーム --}}
-<form action="{{ route('review.confirm') }}" method="post">
+<form action="{{ route('mypage.control.confirm') }}" method="post">
     @csrf
     <div class="regist_form">
         {{-- 商品評価 --}}
@@ -53,6 +53,8 @@
             <select name="evaluation" id="evaluation">
                 @for ($i = 5; $i > 0; $i--)
                     @if ($i == old('evaluation'))
+                        <option value="{{ $i }}" selected>　　{{ $i }}　　</option>
+                    @elseif ($i == $review->evaluation)
                         <option value="{{ $i }}" selected>　　{{ $i }}　　</option>
                     @else
                         <option value="{{ $i }}">　　{{ $i }}　　</option>
@@ -69,7 +71,7 @@
         {{-- 商品コメント --}}
         <div class="form_row_comment">
             <p>商品コメント</p>
-            <textarea name="comment" id="" cols="50" rows="10">{{ old('comment') }}</textarea>
+            <textarea name="comment" id="" cols="50" rows="10">@if (old('comment')){{ old('comment') }}@else{{ $review->comment }}@endif</textarea>
         </div>
 
         {{-- 商品コメントのエラーメッセージ --}}
@@ -78,7 +80,8 @@
         @enderror
 
 
-        <input type="hidden" name="id" value="{{ $product->id }}">
+        <input type="hidden" name="id" value="{{ request()->input('id') }}">
+        <input type="hidden" name="product_id" value="{{ request()->input('product_id') }}">
         {{-- 確認ボタン --}}
         <div class="button">
             <input type="submit" value="商品レビュー登録確認" class="list_submit">
@@ -88,7 +91,7 @@
 </form>
 
 <div class="detail_button_re">
-    <button onClick="history.back();">商品詳細に戻る</button>
+    <button onClick="history.back();">レビュー管理に戻る</button>
 </div>
 
 @endsection

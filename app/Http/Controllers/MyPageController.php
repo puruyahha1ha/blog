@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\UpdateMail;
 use App\Member;
+use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -164,17 +165,50 @@ class MyPageController extends Controller
     public function toReviewUpdate(Request $request)
     {
         $id = $request->id;
+        $product_id = $request->product_id;
 
-        dd($request);
-        $product = $this->searchProduct($id);
-        $avg_evaluation = $this->avgEvaluation($id);
+        $product = $this->searchProduct($product_id);
+        $avg_evaluation = $this->avgEvaluation($product_id);
+        $review = DB::table('reviews')->where('id', $id)->first();
 
-        return view('mypages.review_update', ['product' => $product, 'avg_evaluation' => $avg_evaluation]);
+        return view('mypages.review_update', ['product' => $product, 'avg_evaluation' => $avg_evaluation, 'review' => $review]);
     }
 
+    public function toReviewConfirm(Request $request)
+    {
+        $inputs = $request->all();
+
+        $this->reviewValidator($request->only('evaluation', 'comment'))->validate();
+
+        $product_id = $request->product_id;
+
+        $product = $this->searchProduct($product_id);
+        $avg_evaluation = $this->avgEvaluation($product_id);
+
+        return view('mypages.review_confirm', ['inputs' => $inputs, 'product' => $product, 'avg_evaluation' => $avg_evaluation]);
+    }
+
+    public function reviewComplete(Request $request)
+    {
+        Review::where('id', $request->id)->update(['evaluation' => $request->evaluation, 'comment' => $request->comment]);
+        return redirect()->route('mypage.control');
+    }
     public function toReviewDelete(Request $request)
     {
-        return view('mypages.review_delete');
+        $id = $request->id;
+        $product_id = $request->product_id;
+
+        $product = $this->searchProduct($product_id);
+        $avg_evaluation = $this->avgEvaluation($product_id);
+        $review = DB::table('reviews')->where('id', $id)->first();
+
+        return view('mypages.review_delete', ['product' => $product, 'avg_evaluation' => $avg_evaluation, 'review' => $review]);
+    }
+    public function reviewDeleteComplete(Request $request)
+    {
+        Review::where('id', $request->id)->delete();
+        
+        return redirect()->route('mypage.control');
     }
     /**
      * Get a validator for an incoming registration request.
@@ -214,6 +248,15 @@ class MyPageController extends Controller
             'auth_code' => ['required', 'integer', 'exists:members,auth_code'],
         ]);
     }
+
+    protected function reviewValidator(array $data)
+    {
+        return Validator::make($data, [
+            'evaluation' => ['required', 'integer', 'in:1,2,3,4,5'],
+            'comment' => ['required', 'string', 'max:500'],
+        ]);
+    }
+
 
     protected function searchProduct($id)
     {

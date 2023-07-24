@@ -1,11 +1,14 @@
+
+{{-- @dd($inputs) --}}
 @extends('layouts.templete')
-@section('title', '商品レビュー削除確認画面')
+@section('title', '商品レビュー編集確認')
 @section('header_class', 'login_header')
 @section('header')
-    <p>商品レビュー削除確認</p>
+    <p>商品レビュー編集確認</p>
     <a href="/">トップに戻る</a>
 @endsection
 @section('main')
+
     {{-- 商品情報 --}}
     <div class="product_detail">
         {{-- 写真 --}}
@@ -24,54 +27,54 @@
             @endif
         @endfor
 
-    {{-- 商品名・評価 --}}
-    <div class="product_text">
-        <p>{{ $product->name }}</p>
-        <span>総合評価
-            @if (!empty($avg_evaluation))
-                @foreach (Config('master.stars') as $key => $star)
-                    @if ($key == ceil($avg_evaluation))
-                        {{ $star }}　{{ $key }}
-                    @endif
-                @endforeach
-            @else
-                評価なし
-            @endif
-        </span>
-    </div>
+        {{-- 商品名・評価 --}}
+        <div class="product_text">
+            <p>{{ $product->name }}</p>
+            <span>総合評価 　
+                @if (!empty($avg_evaluation))
+                    @foreach (Config('master.stars') as $key => $star)
+                        @if ($key == ceil($avg_evaluation))
+                            {{ $star }}　{{ $key }}
+                        @endif
+                    @endforeach
+                @else
+                    評価なし
+                @endif
+            </span>
+        </div>
 
     </div>
 
-
-    {{-- 削除フォーム --}}
-    <form action="{{ route('mypage.control.delete.complete') }}" method="post">
+    {{-- 登録フォーム --}}
+    <form action="{{ route('mypage.control.complete') }}" method="post">
         @csrf
         <div class="regist_form">
             {{-- 商品評価 --}}
             <div class="form_row">
                 <p>商品評価</p>
-                <p>{{ $review->evaluation }}</p>
-                <input type="hidden" name="evaluation" value="{{ $review->evaluation }}">
+                <p>{{ $inputs['evaluation'] }}</p>
+                <input type="hidden" name="evaluation" value="{{ $inputs['evaluation'] }}">
             </div>
 
             {{-- 商品コメント --}}
             <div class="form_row_comment">
                 <p>商品コメント</p>
-                <p>{{ $review->comment }}</p>
-                <input type="hidden" name="comment" value="{{ $review->comment }}">
+                <p>{{ $inputs['comment'] }}</p>
+                <input type="hidden" name="comment" value="{{ $inputs['comment'] }}">
             </div>
 
-            <input type="hidden" name="id" value="{{ $review->id }}">
+            <input type="hidden" name="id" value="{{ $inputs['id'] }}">
 
-            {{-- 削除ボタン --}}
+            {{-- 更新ボタン --}}
             <div class="button">
-                <input type="submit" value="削除する" class="list_submit">
+                <input type="submit" value="更新する" class="list_submit">
             </div>
-
+    
         </div>
     </form>
 
     <div class="detail_button_re">
         <button onClick="history.back();">前に戻る</button>
     </div>
+
 @endsection
