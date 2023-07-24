@@ -18,9 +18,9 @@
             <div class="name">
                 <p>氏名</p>
                 <span>姓</span>
-                <input type="text" name="name_sei" value="@if (old('name_sei')) {{ old('name_sei') }} @else {{ Auth::user()->name_sei }} @endif">
+                <input type="text" name="name_sei" value="@if (old('name_sei')){{ old('name_sei') }}@else{{ Auth::user()->name_sei }}@endif">
                 <span>名</span>
-                <input type="text" name="name_mei" value="@if (old('name_mei')) {{ old('name_mei') }} @else {{ Auth::user()->name_mei }} @endif">
+                <input type="text" name="name_mei" value="@if (old('name_mei')){{ old('name_mei') }}@else{{ Auth::user()->name_mei }}@endif">
             </div>
 
             {{-- 姓のエラーメッセージ --}}
@@ -36,7 +36,7 @@
             {{-- ニックネーム --}}
             <div class="form_row">
                 <p>ニックネーム</p>
-                <input type="text" name="nickname" value="@if (old('nickname')) {{ old('nickname') }} @else {{ Auth::user()->nickname }} @endif">
+                <input type="text" name="nickname" value="@if (old('nickname')){{ old('nickname') }}@else{{ Auth::user()->nickname }}@endif">
             </div>
 
             {{-- ニックネームのエラーメッセージ --}}

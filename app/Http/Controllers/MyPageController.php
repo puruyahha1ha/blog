@@ -115,7 +115,7 @@ class MyPageController extends Controller
     {
         $this->emailValidator($request->only('email'))->validate();
 
-        $auth_code = str_pad(random_int(0, 999999), 6, 0, STR_PAD_LEFT);
+        $auth_code = random_int(100000, 999999);
         Member::where('id', Auth::user()->id)->update(['auth_code' => $auth_code]);
 
         // 送信メール
@@ -137,6 +137,44 @@ class MyPageController extends Controller
         $email = $request->email;
         Member::where('id', Auth::user()->id)->update(['email' => $email]);
         return redirect()->route('mypage');
+    }
+
+    public function toReviewControl()
+    {
+        $product_ids = DB::table('reviews')->select('product_id')->where('member_id', Auth::user()->id)->get()->all();
+        $ids = [];
+        foreach ($product_ids as $key => $val) {
+            foreach ($val as $val_k => $val_v) {
+                array_push($ids, $val_v);
+            }
+        }
+
+        $reviews = DB::table('reviews')
+            ->join('products', 'reviews.product_id', '=', 'products.id')
+            ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+            ->join('product_subcategories', 'products.product_subcategory_id', '=', 'product_subcategories.id')
+            ->select('reviews.*', 'products.product_category_id', 'products.product_subcategory_id', 'products.name', 'products.image_1', 'products.image_2', 'products.image_3', 'products.image_4', 'product_categories.name as main_name', 'product_subcategories.name as sub_name')
+            ->where('reviews.member_id', Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->paginate(5);
+
+        return view('mypages.review_control', ['reviews' => $reviews]);
+    }
+
+    public function toReviewUpdate(Request $request)
+    {
+        $id = $request->id;
+
+        dd($request);
+        $product = $this->searchProduct($id);
+        $avg_evaluation = $this->avgEvaluation($id);
+
+        return view('mypages.review_update', ['product' => $product, 'avg_evaluation' => $avg_evaluation]);
+    }
+
+    public function toReviewDelete(Request $request)
+    {
+        return view('mypages.review_delete');
     }
     /**
      * Get a validator for an incoming registration request.
@@ -175,5 +213,26 @@ class MyPageController extends Controller
         return Validator::make($data, [
             'auth_code' => ['required', 'integer', 'exists:members,auth_code'],
         ]);
+    }
+
+    protected function searchProduct($id)
+    {
+        $product = DB::table('products')
+            ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+            ->join('product_subcategories', 'products.product_subcategory_id', '=', 'product_subcategories.id')
+            ->select('products.*', 'product_categories.name as main_name', 'product_subcategories.name as sub_name')
+            ->where('products.id', $id)
+            ->first();
+
+        return $product;
+    }
+
+    protected function avgEvaluation($id)
+    {
+        $avgEvaluation = DB::table('reviews')
+            ->where('product_id', $id)
+            ->avg('evaluation');
+
+        return $avgEvaluation;
     }
 }

@@ -66,6 +66,11 @@
         <a href="{{ route('mypage.email') }}" style="margin-bottom: 20px">メールアドレス変更</a>
     </div>
 
+    {{-- 商品レビュー管理 --}}
+    <div class="mypage_button">
+        <a href="{{ route('mypage.control') }}" style="margin-bottom: 20px">商品レビュー管理</a>
+    </div>
+
     {{-- 退会ボタン --}}
     <div class="detail_button_re">
         <a href="{{ route('withdrawal') }}">退会</a>
