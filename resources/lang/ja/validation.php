@@ -155,6 +155,7 @@ return [
         'email' => 'メールアドレス',
         'evaluation' => '商品評価',
         'comment' => '商品コメント',
+        'auth_code' => '認証コード',
     ],
 
 ];

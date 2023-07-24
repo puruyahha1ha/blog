@@ -61,11 +61,14 @@ Route::get('mypage/withdrawal/complete', 'MyPageController@completeWithdrawal')-
 
 Route::get('mypage/info', 'MyPageController@toInfoUpdate')->name('mypage.info');
 Route::post('mypage/info/confirm', 'MyPageController@toInfoUpdateConfirm')->name('mypage.info.confirm');
-Route::post('mypage/info/complete', 'MyPageController@infoUpdateComplete')->name('mypage.info.confirm');
+Route::post('mypage/info/complete', 'MyPageController@infoUpdateComplete')->name('mypage.info.complete');
 
 Route::get('mypage/password', 'MyPageController@toPasswordUpdate')->name('mypage.password');
-Route::post('mypage/password/complete', 'MyPageController@passwordUpdateComplete')->name('mypage.info.confirm');
+Route::post('mypage/password/complete', 'MyPageController@passwordUpdateComplete')->name('mypage.password.complete');
 
 
 Route::get('mypage/email', 'MyPageController@toEmailUpdate')->name('mypage.email');
+Route::post('mypage/email/confirm', 'MyPageController@emailUpdateConfirm')->name('mypage.email.confirm');
+Route::get('mypage/email/showemail', 'MyPageController@showEmail')->name('mypages.showEmail');
+Route::post('mypage/email/complete', 'MyPageController@emailUpdateComplete')->name('mypage.email.complete');
 

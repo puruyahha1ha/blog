@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UpdateMail;
 use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class MyPageController extends Controller
 {
@@ -76,7 +78,7 @@ class MyPageController extends Controller
 
     public function toEmailUpdate()
     {
-        return view('mypages.emial_update');
+        return view('mypages.email_update');
     }
 
     public function toInfoUpdateConfirm(Request $request)
@@ -100,9 +102,42 @@ class MyPageController extends Controller
 
     public function passwordUpdateComplete(Request $request)
     {
+        $this->passwordValidator($request->only('password', 'password_confirmation'))->validate();
+
+        $password = bcrypt($request->password);
         // パスワード更新処理
+        Member::where('id', Auth::user()->id)->update(['password' => $password]);
+
+        return redirect()->route('mypage');
     }
 
+    public function emailUpdateConfirm(Request $request)
+    {
+        $this->emailValidator($request->only('email'))->validate();
+
+        $auth_code = str_pad(random_int(0, 999999), 6, 0, STR_PAD_LEFT);
+        Member::where('id', Auth::user()->id)->update(['auth_code' => $auth_code]);
+
+        // 送信メール
+        Mail::to($request->email)->send(new UpdateMail([
+            'auth_code' => $auth_code
+        ]));
+
+        return redirect()->route('mypages.showEmail', ['email' => $request->email]);
+    }
+
+    public function showEmail(Request $request)
+    {
+        return view('mypages.email_confirm', ['email' => $request->email]);
+    }
+    public function emailUpdateComplete(Request $request)
+    {
+        $this->authCodeValidator($request->only('auth_code'))->validate();
+
+        $email = $request->email;
+        Member::where('id', Auth::user()->id)->update(['email' => $email]);
+        return redirect()->route('mypage');
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -116,6 +151,29 @@ class MyPageController extends Controller
             'name_mei' => ['required', 'string', 'max:20'],
             'nickname' => ['required', 'string', 'max:10'],
             'gender' => ['required', 'integer', 'in:1,2'],
+        ]);
+    }
+    protected function passwordValidator(array $data)
+    {
+        return Validator::make($data, [
+            'password' => ['required', 'string', 'min:8', 'max:20', 'regex:/^[a-zA-Z0-9]+$/', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'min:8', 'max:20', 'regex:/^[a-zA-Z0-9]+$/'],
+        ]);
+    }
+
+    protected function emailValidator(array $data)
+    {
+        return Validator::make($data, [
+            'email' => ['required', 'string', 'max:200', 'email', 'unique:members'],
+        ]);
+    }
+
+    protected function authCodeValidator(array $data)
+    {
+        $auth_code = $data['auth_code'];
+
+        return Validator::make($data, [
+            'auth_code' => ['required', 'integer', 'exists:members,auth_code'],
         ]);
     }
 }

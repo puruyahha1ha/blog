@@ -10,20 +10,31 @@
 @section('main')
     <h1>パスワード変更</h1>
 
-    <form action="" method="post">
+    <form action="{{ route('mypage.password.complete') }}" method="post">
         @csrf
 
         {{-- パスワード --}}
         <div class="form_row">
             <p>パスワード</p>
-            <input type="text" name="password">
+            <input type="password" name="password">
         </div>
+
+        {{-- パスワードのエラーメッセージ --}}
+        @error('password')
+            <div class="error">{{ $message }}</div>
+        @enderror
+
 
         {{-- パスワード確認 --}}
         <div class="form_row">
             <p>パスワード確認</p>
-            <input type="text" name="password_confirm">
+            <input type="password" name="password_confirmation">
         </div>
+
+        {{-- パスワード確認のエラーメッセージ --}}
+        @error('password_confirmation')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
         {{-- パスワードを変更 --}}
         <div class="button">
