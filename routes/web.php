@@ -35,6 +35,8 @@ Route::post('product/confirm', 'ProductController@toConfirmForm')->name('product
 
 Route::post('product/complete', 'ProductController@complete')->name('product.complete');
 
+
+
 Route::get('list', 'ListController@toList')->name('list');
 
 Route::post('list', 'ListController@search')->name('list.search');
@@ -45,11 +47,25 @@ Route::get('list/back', 'ListController@listBack')->name('list.back');
 
 Route::get('list/register', 'ListController@toRegister')->name('list.register')->middleware('auth');
 
-
 Route::get('list/review', 'ListController@toReview')->name('list.review');
-
 Route::post('list/confirm', 'ListController@toConfirmForm')->name('review.confirm');
-
 Route::post('list/complete', 'ListController@complete')->name('review.complete');
 
+
+
 Route::get('mypage', 'MyPageController@toMyPage')->name('mypage');
+
+Route::get('mypage/withdrawal', 'MyPageController@toWithdrawal')->name('withdrawal');
+Route::get('mypage/withdrawal/complete', 'MyPageController@completeWithdrawal')->name('withdrawal.complete');
+
+
+Route::get('mypage/info', 'MyPageController@toInfoUpdate')->name('mypage.info');
+Route::post('mypage/info/confirm', 'MyPageController@toInfoUpdateConfirm')->name('mypage.info.confirm');
+Route::post('mypage/info/complete', 'MyPageController@infoUpdateComplete')->name('mypage.info.confirm');
+
+Route::get('mypage/password', 'MyPageController@toPasswordUpdate')->name('mypage.password');
+Route::post('mypage/password/complete', 'MyPageController@passwordUpdateComplete')->name('mypage.info.confirm');
+
+
+Route::get('mypage/email', 'MyPageController@toEmailUpdate')->name('mypage.email');
+

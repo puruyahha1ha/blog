@@ -309,7 +309,6 @@ li span {
     color: white;
     border-radius: 10px;
     border: blue solid 2px;
-    margin-bottom: 20px;
     margin: 20px;
 }
 
@@ -324,7 +323,6 @@ li span {
     color: rgb(100, 100, 255);
     border-radius: 10px;
     border: rgb(100, 100, 255) solid 2px;
-    margin-bottom: 20px;
     margin: 20px;
 }
 
@@ -363,7 +361,6 @@ select#evaluation {
     color: white;
     border-radius: 10px;
     border: rgb(100, 100, 255) solid 2px;
-    margin-bottom: 20px;
     margin: 20px;
 }
 
@@ -402,4 +399,26 @@ select#evaluation {
 
 .product_comment p {
     width: 200px;
+}
+
+.header_button {
+    display: flex;
+}
+
+/* マイページ */
+
+.mypage_button {
+    display: flex;
+    justify-content: center;
+}
+.mypage_button a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: blue;
+    color: white;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
 }
