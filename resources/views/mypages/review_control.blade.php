@@ -38,7 +38,11 @@
                             <span>{{ $star }}　{{ $key }}</span>
                         @endif
                     @endforeach
-                    <span>{{ Str::limit($val->comment, 32, '...') }}</span>
+                    <span>@if (mb_strlen($val->comment) > 16)
+                        {{ mb_substr($val->comment, 0, 16) }}...
+                    @else
+                        {{ $val->comment }}
+                    @endif</span>
 
                     {{-- レビュー編集・削除 --}}
                     <div class="buttons">
@@ -65,4 +69,9 @@
     </div>
 
 </form>
+
+<div class="detail_button_re">
+    <a href="{{ route('mypage') }}">マイページに戻る</a>
+</div>
+
 @endsection

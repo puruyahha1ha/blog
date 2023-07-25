@@ -142,7 +142,7 @@ class MyPageController extends Controller
 
     public function toReviewControl()
     {
-        $product_ids = DB::table('reviews')->select('product_id')->where('member_id', Auth::user()->id)->get()->all();
+        $product_ids = DB::table('reviews')->select('product_id')->where(['member_id' => Auth::user()->id, 'deleted_at' => null])->get()->all();
         $ids = [];
         foreach ($product_ids as $key => $val) {
             foreach ($val as $val_k => $val_v) {
@@ -155,7 +155,7 @@ class MyPageController extends Controller
             ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
             ->join('product_subcategories', 'products.product_subcategory_id', '=', 'product_subcategories.id')
             ->select('reviews.*', 'products.product_category_id', 'products.product_subcategory_id', 'products.name', 'products.image_1', 'products.image_2', 'products.image_3', 'products.image_4', 'product_categories.name as main_name', 'product_subcategories.name as sub_name')
-            ->where('reviews.member_id', Auth::user()->id)
+            ->where(['reviews.member_id' => Auth::user()->id, 'reviews.deleted_at' => null])
             ->orderBy('id', 'desc')
             ->paginate(5);
 
@@ -206,7 +206,7 @@ class MyPageController extends Controller
     }
     public function reviewDeleteComplete(Request $request)
     {
-        Review::where('id', $request->id)->delete();
+        Review::where('id', $request->id)->update(['deleted_at' => now()]);
         
         return redirect()->route('mypage.control');
     }

@@ -81,3 +81,6 @@ Route::post('mypage/control/complete', 'MyPageController@reviewComplete')->name(
 Route::get('mypage/control/delete', 'MyPageController@toReviewDelete')->name('mypage.control.delete');
 Route::post('mypage/control/delete/complete', 'MyPageController@reviewDeleteComplete')->name('mypage.control.delete.complete');
 
+
+Route::get('admin', 'AdminController@viewLogin');
+
