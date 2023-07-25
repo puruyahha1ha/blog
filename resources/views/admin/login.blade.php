@@ -21,13 +21,13 @@
 @section('main')
     <h1>管理画面</h1>
 
-    <form action="" method="post">
+    <form action="{{ route('admin.login') }}" method="post">
         @csrf
 
         {{-- ログインID --}}
         <div class="form_row">
             <p>ログインID</p>
-            <input type="text" name="login_id">
+            <input type="text" name="login_id" value="{{ old('login_id') }}">
         </div>
 
         {{-- ログインIDのエラーメッセージ --}}

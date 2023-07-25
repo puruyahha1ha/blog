@@ -82,5 +82,10 @@ Route::get('mypage/control/delete', 'MyPageController@toReviewDelete')->name('my
 Route::post('mypage/control/delete/complete', 'MyPageController@reviewDeleteComplete')->name('mypage.control.delete.complete');
 
 
-Route::get('admin', 'AdminController@viewLogin');
+Route::get('admin/login', 'AdminController@showAdminLoginForm')->name('admin.login');
+Route::post('admin/login', 'AdminController@adminLogin');
+
+Route::get('admin', 'AdminController@index')->name('admin')->middleware('admin');
+
+Route::post('admin/logout', 'AdminController@logout')->name('admin.logout');
 

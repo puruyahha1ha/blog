@@ -156,6 +156,7 @@ return [
         'evaluation' => '商品評価',
         'comment' => '商品コメント',
         'auth_code' => '認証コード',
+        'login_id' => 'ログインID',
     ],
 
 ];
