@@ -32,8 +32,6 @@
     <a href="/admin/list">一覧へ戻る</a>
 @endsection
 @section('main')
-    <h1>会員情報確認画面</h1>
-
     <form method="POST" action="{{ route('admin.list.complete') }}">
         @csrf
 

@@ -518,3 +518,19 @@ th a {
     align-items: center;
     text-decoration: none;
 }
+
+/* 会員詳細画面 */
+.detail_buttons a,
+#delete input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4472c4;
+    background-color: #ffffff;
+    width: 200px;
+    height: 50px;
+    border: #4472c4 solid 1px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+}

@@ -24,6 +24,7 @@ class AdminController extends Controller
     public function showList(Request $request)
     {
         $search = Member::query();
+        $search->where('deleted_at', null);
 
         if ($request->id != '') {
 
@@ -73,14 +74,23 @@ class AdminController extends Controller
     {
         return view('admin.regist');
     }
-    
+
     public function memberEdit(Request $request)
     {
         $id = $request->id;
 
-        $member = Member::where('id', $id)->first();
+        $member = Member::where(['id' => $id,'deleted_at' => null])->first();
 
         return view('admin.edit', ['member' => $member]);
+    }
+
+    public function memberDetail(Request $request)
+    {
+        $id = $request->id;
+
+        $member = Member::where(['id' => $id,'deleted_at' => null])->first();
+
+        return view('admin.detail', ['member' => $member]);
     }
 
     public function toMemberConfirm(Request $request)
@@ -143,6 +153,14 @@ class AdminController extends Controller
         return redirect()->route('admin.list');
     }
 
+    public function memberDetailDelete(Request $request)
+    {
+        $id = $request->id;
+
+        Member::where('id', $id)->update(['deleted_at' => now()]);
+        
+        return redirect()->route('admin.list');
+    }
 
     public function adminLogin(Request $request)
     {

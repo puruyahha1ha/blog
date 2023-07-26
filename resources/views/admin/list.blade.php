@@ -70,13 +70,14 @@
                 <th style="width: 50px">性別</th>
                 <th style="width: 150px">@sortablelink('created_at', '登録日時 ▼')</th>
                 <th style="width: 80px; border: black solid 1px; border-bottom: none;">編集</th>
+                <th style="width: 80px; border: black solid 1px; border-bottom: none;">詳細</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($members as $val)
                 <tr>
                     <th>{{ $val->id }}</th>
-                    <th>{{ $val->name_sei }}　{{ $val->name_mei }}</th>
+                    <th><a href="{{ route('admin.list.detail', ['id' => $val->id]) }}" style="text-decoration: none; color:blue">{{ $val->name_sei }}　{{ $val->name_mei }}</a></th>
                     <th style="color: blue">{{ $val->email }}</th>
                     <th>
                         @if ($val->gender == 1)
@@ -87,6 +88,7 @@
                     </th>
                     <th>@if ($val->created_at != null){{ $val->created_at->format('Y/m/d') }}@endif</th>
                     <th style="border-left:black solid 1px"><a href="{{ route('admin.list.edit', ['id' => $val->id]) }}" style="text-decoration: none; color:blue">編集</a></th>
+                    <th style="border-left:black solid 1px"><a href="{{ route('admin.list.detail', ['id' => $val->id]) }}" style="text-decoration: none; color:blue">詳細</a></th>
                 </tr>
             @endforeach
         </tbody>

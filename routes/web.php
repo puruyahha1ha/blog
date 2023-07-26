@@ -93,6 +93,8 @@ Route::get('admin/list', 'AdminController@showList')->name('admin.list');
 
 Route::get('admin/list/regist', 'AdminController@memberRegist')->name('admin.list.regist');
 Route::get('admin/list/edit', 'AdminController@memberEdit')->name('admin.list.edit');
+Route::get('admin/list/detail', 'AdminController@memberDetail')->name('admin.list.detail');
+Route::post('admin/list/detail/detele', 'AdminController@memberDetailDelete')->name('admin.list.detail.delete');
 
 Route::post('admin/list/confirm', 'AdminController@toMemberConfirm')->name('admin.list.confirm');
 
