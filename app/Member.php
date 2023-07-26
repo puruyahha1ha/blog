@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kyslik\ColumnSortable\Sortable; 
+use Kyslik\ColumnSortable\Sortable;
 
 class Member extends Authenticatable
 {
@@ -19,7 +19,7 @@ class Member extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name_sei', 'name_mei', 'nickname', 'gender', 'password', 'email' 
+        'id', 'name_sei', 'name_mei', 'nickname', 'gender', 'password', 'email'
     ];
 
     /**
@@ -41,6 +41,6 @@ class Member extends Authenticatable
     ];
 
     protected $table = 'members';
-    protected $datas = ['created_at', 'updated_at','deleted_at'];
-    public $sortable = ['id', 'created_at']; 
+    protected $datas = ['created_at', 'updated_at', 'deleted_at'];
+    public $sortable = ['id', 'created_at'];
 }

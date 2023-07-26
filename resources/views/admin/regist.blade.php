@@ -1,5 +1,5 @@
 @extends('layouts.templete')
-@section('title', '会員編集')
+@section('title', '会員登録')
 @section('head')
     <style>
         .login_header {
@@ -20,7 +20,7 @@
 @endsection
 @section('header_class', 'login_header')
 @section('header')
-    <p>会員編集</p>
+    <p>会員登録</p>
     <a href="/admin/list">一覧へ戻る</a>
 @endsection
 @section('main')
@@ -30,19 +30,16 @@
         {{-- ID --}}
         <div class="form_row">
             <p>ID</p>
-            <p>{{ $member->id }}</p>
-            <input type="hidden" name="id" value="@if (old('id')){{ old('id') }}@else{{ $member->id }}@endif">
+            <p>登録後に自動採番</p>
         </div>
 
         {{-- 氏名 --}}
         <div class="name">
             <p>氏名</p>
             <span>姓</span>
-            <input type="text" name="name_sei"
-                value="@if (old('name_sei')){{ old('name_sei') }}@else{{ $member->name_sei }}@endif">
+            <input type="text" name="name_sei" value="{{ old('name_sei') }}">
             <span>名</span>
-            <input type="text" name="name_mei"
-                value="@if (old('name_mei')){{ old('name_mei') }}@else{{ $member->name_mei }}@endif">
+            <input type="text" name="name_mei" value="{{ old('name_mei') }}">
         </div>
 
         {{-- 姓のエラーメッセージ --}}
@@ -58,8 +55,7 @@
         {{-- ニックネーム --}}
         <div class="form_row">
             <p>ニックネーム</p>
-            <input type="text" name="nickname"
-                value="@if (old('nickname')){{ old('nickname') }}@else{{ $member->nickname }}@endif">
+            <input type="text" name="nickname" value="{{ old('nickname') }}">
         </div>
 
         {{-- ニックネームのエラーメッセージ --}}
@@ -71,8 +67,7 @@
         <div class="gender">
             <p>性別</p>
             @foreach (Config('master.gender') as $key => $value)
-                <input type="radio" name="gender" value="{{ $key }}" id="{{ $value }}"
-                    @if (old('gender') == $key) checked @elseif ($member->gender == $key) checked @endif>
+                <input type="radio" name="gender" value="{{ $key }}" id="{{ $value }}" @if (old('gender') == $key) checked @endif>
                 <label for="{{ $value }}">{{ $value }}</label>
             @endforeach
         </div>
@@ -107,8 +102,7 @@
         {{-- メールアドレス --}}
         <div class="form_row">
             <p>メールアドレス</p>
-            <input type="text" name="email"
-                value="@if (old('email')){{ old('email') }}@else{{ $member->email }}@endif">
+            <input type="text" name="email" value="{{ old('email') }}">
         </div>
 
         {{-- メールアドレスのエラーメッセージ --}}
@@ -116,9 +110,9 @@
             <div class="error">{{ $message }}</div>
         @enderror
 
-        <input type="hidden" name="from" value="edit">
+        <input type="hidden" name="from" value="regist">
         <div class="search_button">
-            <input type="submit" name="confirm" value="確認画面へ" >
+            <input type="submit" name="confirm" value="確認画面へ">
         </div>
 
     </form>

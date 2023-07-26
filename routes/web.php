@@ -91,5 +91,10 @@ Route::get('admin', 'AdminController@index')->name('admin')->middleware('admin')
 
 Route::get('admin/list', 'AdminController@showList')->name('admin.list');
 
+Route::get('admin/list/regist', 'AdminController@memberRegist')->name('admin.list.regist');
 Route::get('admin/list/edit', 'AdminController@memberEdit')->name('admin.list.edit');
+
+Route::post('admin/list/confirm', 'AdminController@toMemberConfirm')->name('admin.list.confirm');
+
+Route::post('admin/list/complete', 'AdminController@memberComplete')->name('admin.list.complete');
 

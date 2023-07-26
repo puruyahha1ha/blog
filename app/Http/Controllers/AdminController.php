@@ -6,6 +6,7 @@ use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
@@ -68,13 +69,78 @@ class AdminController extends Controller
         return view('admin.list', ['members' => $members]);
     }
 
+    public function memberRegist(Request $request)
+    {
+        return view('admin.regist');
+    }
+    
     public function memberEdit(Request $request)
     {
         $id = $request->id;
 
         $member = Member::where('id', $id)->first();
 
-        return view('admin.edit');
+        return view('admin.edit', ['member' => $member]);
+    }
+
+    public function toMemberConfirm(Request $request)
+    {
+        $inputs = $request->all();
+        if ($request->from == 'regist') {
+            $this->registValidator($request->only('name_sei', 'name_mei', 'nickname', 'gender', 'password', 'password_confirmation', 'email'))->validate();
+        } else {
+            $this->editValidator($request->only('id', 'name_sei', 'name_mei', 'nickname', 'gender', 'password', 'password_confirmation', 'email'))->validate();
+        }
+
+        return view('admin.confirm', ['inputs' => $inputs]);
+    }
+
+    public function memberComplete(Request $request)
+    {
+        $form = $request->from;
+
+        // 二重送信防止
+        $request->session()->regenerateToken();
+
+        // パスワードのハッシュ化
+        if ($request->password != null) {
+            $hash_password = bcrypt($request->password);
+        }
+
+        // DBに登録・更新
+        if ($request->from == 'regist') {
+            Member::create([
+                'name_sei' => $request->name_sei,
+                'name_mei' => $request->name_mei,
+                'nickname' => $request->nickname,
+                'gender' => $request->gender,
+                'password' => $hash_password,
+                'email' => $request->email
+            ]);
+        } else {
+            if (!empty($hash_password)) {
+                Member::where('id', $request->id)
+                    ->update([
+                        'name_sei' => $request->name_sei,
+                        'name_mei' => $request->name_mei,
+                        'nickname' => $request->nickname,
+                        'gender' => $request->gender,
+                        'password' => $hash_password,
+                        'email' => $request->email
+                    ]);
+            } else {
+                Member::where('id', $request->id)
+                    ->update([
+                        'name_sei' => $request->name_sei,
+                        'name_mei' => $request->name_mei,
+                        'nickname' => $request->nickname,
+                        'gender' => $request->gender,
+                        'email' => $request->email
+                    ]);
+            }
+        }
+
+        return redirect()->route('admin.list');
     }
 
 
@@ -119,5 +185,31 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('admin.login');
+    }
+
+    protected function registValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name_sei' => 'required|max:20',
+            'name_mei' => 'required|max:20',
+            'nickname' => 'required|max:10',
+            'gender' => 'required|in:1,2',
+            'password' => 'required|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
+            'password_confirmation' => 'required|min:8|max:20|regex:/^[a-zA-Z0-9]+$/',
+            'email' => 'required|max:200|email|unique:members,email',
+        ]);
+    }
+
+    protected function editValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name_sei' => 'required|max:20',
+            'name_mei' => 'required|max:20',
+            'nickname' => 'required|max:10',
+            'gender' => 'required|in:1,2',
+            'password' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
+            'password_confirmation' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/',
+            'email' => 'required|max:200|email|unique:members,email,' . $data['id'] . ',id',
+        ]);
     }
 }

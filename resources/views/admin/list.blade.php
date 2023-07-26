@@ -30,6 +30,7 @@
 @endsection
 @section('main')
 
+<a href="{{ route('admin.list.regist') }}" class="list_regist">会員登録</a>
     <form action="{{ route('admin.list') }}" method="get">
         {{-- 検索フォーム --}}
         <div class="search_form">
@@ -85,7 +86,7 @@
                         @endif
                     </th>
                     <th>@if ($val->created_at != null){{ $val->created_at->format('Y/m/d') }}@endif</th>
-                    <th style="border-left:black solid 1px"><a href="{{ route('admin.list.edit', ['id' , $val->id]) }}" style="text-decoration: none; color:blue">編集</a></th>
+                    <th style="border-left:black solid 1px"><a href="{{ route('admin.list.edit', ['id' => $val->id]) }}" style="text-decoration: none; color:blue">編集</a></th>
                 </tr>
             @endforeach
         </tbody>
