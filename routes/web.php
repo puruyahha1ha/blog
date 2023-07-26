@@ -100,6 +100,11 @@ Route::post('admin/list/confirm', 'AdminController@toMemberConfirm')->name('admi
 Route::post('admin/list/complete', 'AdminController@memberComplete')->name('admin.list.complete');
 
 Route::get('admin/category_list', 'AdminController@showCategoryList')->name('admin.category_list');
-Route::get('admin/category_list/edit', 'AdminController@memberEdit')->name('admin.category_list.edit');
-Route::get('admin/category_list/detail', 'AdminController@memberDetail')->name('admin.category_list.detail');
+Route::get('admin/category_list/edit', 'AdminController@categoryEdit')->name('admin.category_list.edit');
+Route::get('admin/category_list/detail', 'AdminController@categoryDetail')->name('admin.category_list.detail');
+
+Route::post('admin/category_list/confirm', 'AdminController@toCategoryConfirm')->name('admin.category_list.confirm');
+
+Route::post('admin/category_list/complete', 'AdminController@categoryComplete')->name('admin.category_list.complete');
+
 

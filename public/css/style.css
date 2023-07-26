@@ -535,3 +535,9 @@ th a {
     text-decoration: none;
     font-size: 16px;
 }
+
+/* 商品カテゴリ登録 */
+.inputs {
+    display: flex;
+    flex-direction: column;
+}

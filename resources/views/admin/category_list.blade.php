@@ -1,5 +1,5 @@
 @extends('layouts.templete')
-@section('title', '会員一覧')
+@section('title', '商品カテゴリ一覧')
 @section('head')
     <style>
         .login_header {
@@ -21,7 +21,7 @@
 @endsection
 @section('header_class', 'login_header')
 @section('header')
-    <p>会員一覧</p>
+    <p>商品カテゴリ一覧</p>
     <a href="/admin">トップへ戻る</a>
 @endsection
 @section('main')
@@ -49,7 +49,7 @@
         </div>
     </form>
 
-    {{-- 会員一覧 --}}
+    {{-- 商品カテゴリ一覧 --}}
     <table>
         <thead>
             <tr>

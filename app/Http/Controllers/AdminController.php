@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use App\Product_category;
+use App\Product_subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -75,13 +76,13 @@ class AdminController extends Controller
     {
         $search = Product_category::query();
         $search->leftjoin('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id')
-        ->select('product_categories.id', 'product_categories.name', 'product_categories.created_at', 'product_subcategories.name as sub_name')    
-        ->where('product_categories.deleted_at', null);
+            ->select('product_categories.id', 'product_categories.name', 'product_categories.created_at', 'product_subcategories.name as sub_name')
+            ->where('product_categories.deleted_at', null);
 
         if ($request->id != '') {
 
             $id = $request->id;
-            $search->where('product_subcategories.id', $id);
+            $search->where('product_categories.id', $id);
         }
 
         if ($request->free_word != '') {
@@ -125,7 +126,6 @@ class AdminController extends Controller
 
     public function toMemberConfirm(Request $request)
     {
-        dd($request->from);
         $inputs = $request->all();
         if ($request->from == 'regist') {
             $this->registValidator($request->only('name_sei', 'name_mei', 'nickname', 'gender', 'password', 'password_confirmation', 'email'))->validate();
@@ -138,8 +138,6 @@ class AdminController extends Controller
 
     public function memberComplete(Request $request)
     {
-        $form = $request->from;
-
         // 二重送信防止
         $request->session()->regenerateToken();
 
@@ -210,6 +208,79 @@ class AdminController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public function categoryEdit(Request $request)
+    {
+        $id = $request->id;
+
+        $product_category = Product_category::where(['id' => $id, 'deleted_at' => null])->first();
+        $product_subcategory = Product_subcategory::where(['product_category_id' => $id, 'deleted_at' => null])->get()->all();
+
+        return view('admin.category_edit', ['product_category' => $product_category, 'product_subcategory' => $product_subcategory]);
+    }
+
+    public function categoryDetail(Request $request)
+    {
+        $id = $request->id;
+
+        $product_category = Product_category::where(['id' => $id, 'deleted_at' => null])->first();
+
+        return view('admin.category_detail', ['product_category' => $product_category]);
+    }
+
+    public function toCategoryConfirm(Request $request)
+    {
+        $inputs = $request->all();
+
+        $this->categoryValidator($request->only('name', 'sub_name1', 'sub_name2', 'sub_name3', 'sub_name4', 'sub_name5', 'sub_name6', 'sub_name7', 'sub_name8', 'sub_name9', 'sub_name10'))->validate();
+
+        return view('admin.category_confirm', ['inputs' => $inputs]);
+    }
+
+    public function categoryComplete(Request $request)
+    {
+        // 二重送信防止
+        $request->session()->regenerateToken();
+
+        // DBに登録・更新
+        if ($request->from == 'regist') {
+
+            Product_category::create([
+                'name' => $request->name
+            ]);
+
+            $main_category_id = Product_category::select('id')->where('name', $request->name)->first();
+
+            for ($i = 1; $i <= 10; $i++) {
+                $name = "sub_name$i";
+                if (!empty($request->$name)) {
+                    Product_subcategory::create([
+                        'product_category_id' => $main_category_id->id,
+                        'name' => $request->$name,
+                    ]);
+                }
+            }
+            
+        } else {
+
+            $main_category_id = Product_category::select('id')->where('name', $request->name)->first();
+
+            Product_subcategory::query()->delete('product_category_id', $request->id);
+
+            for ($i = 1; $i <= 10; $i++) {
+                $name = "sub_name$i";
+                if (!empty($request->$name)) {
+                    Product_subcategory::create([
+                        'product_category_id' => $main_category_id->id,
+                        'name' => $request->$name,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('admin.category_list');
+    }
+
+
     protected function attemptLogin(Request $request)
     {
         return Auth::guard('admin')->attempt(
@@ -259,6 +330,23 @@ class AdminController extends Controller
             'password' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
             'password_confirmation' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/',
             'email' => 'required|max:200|email|unique:members,email,' . $data['id'] . ',id',
+        ]);
+    }
+
+    protected function categoryValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:20',
+            'sub_name1' => 'required|max:20',
+            'sub_name2' => 'max:20',
+            'sub_name3' => 'max:20',
+            'sub_name4' => 'max:20',
+            'sub_name5' => 'max:20',
+            'sub_name6' => 'max:20',
+            'sub_name7' => 'max:20',
+            'sub_name8' => 'max:20',
+            'sub_name9' => 'max:20',
+            'sub_name10' => 'max:20',
         ]);
     }
 }
