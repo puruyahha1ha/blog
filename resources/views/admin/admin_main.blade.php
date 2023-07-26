@@ -11,6 +11,10 @@
             height: 100%;
         }
 
+        main {
+            height: 835px;
+        }
+
         footer {
             background-color: #d9d9d9;
             width: 100%;
@@ -34,5 +38,7 @@
     </div>
 @endsection
 @section('main')
-    <div style="width: 100%; height: 800px"></div>
+    <div class="detail_button">
+        <a href="{{ route('admin.list') }}">会員一覧</a>
+    </div>
 @endsection

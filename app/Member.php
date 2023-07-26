@@ -6,12 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable; 
 
 class Member extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
-
+    use Sortable;
     /**
      * The attributes that are mass assignable.
      *
@@ -40,5 +41,6 @@ class Member extends Authenticatable
     ];
 
     protected $table = 'members';
-    protected $datas = ['deleted_at'];
+    protected $datas = ['created_at', 'updated_at','deleted_at'];
+    public $sortable = ['id', 'created_at']; 
 }

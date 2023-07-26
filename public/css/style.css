@@ -411,7 +411,8 @@ select#evaluation {
     display: flex;
     justify-content: center;
 }
-.mypage_button a{
+
+.mypage_button a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -430,6 +431,76 @@ select#evaluation {
     background-color: #2f5597;
     color: white;
     border-radius: 10px;
-    margin: 30px 0
-    ;
+    margin: 30px 0;
+}
+
+/* 会員一覧 */
+
+.search_form {
+    border: black solid 1px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.search_row {
+    display: flex;
+    align-items: center;
+    border: black solid 1px;
+}
+
+.search_row p {
+    width: 100px;
+    margin: 0;
+    padding: 10px;
+    border-right: black solid 1px;
+    background-color: #d8d8d8;
+}
+
+.search_row input {
+    width: 300px;
+    height: 20px;
+    margin: 0 30px;
+}
+
+input#man,
+input#woman {
+    width: 30px;
+}
+
+.search_button {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.search_button input {
+    color: #4472c4;
+    background-color: #ffffff;
+    width: 200px;
+    height: 50px;
+    border-color: #4472c4;
+    border-radius: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    border: black solid 1px;
+    margin: 20px 0;
+
+}
+
+thead {
+    background-color: #d8d8d8;
+    border: black solid 1px;
+}
+
+th {
+    border: black dotted 1px;
+}
+
+th a {
+    text-decoration: none;
+    color: black;
 }
