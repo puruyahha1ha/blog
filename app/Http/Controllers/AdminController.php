@@ -74,14 +74,14 @@ class AdminController extends Controller
     public function showCategoryList(Request $request)
     {
         $search = Product_category::query();
-        $search->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id')
-        ->select('product_categories.*', 'product_subcategories.name as sub_name')    
+        $search->leftjoin('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id')
+        ->select('product_categories.id', 'product_categories.name', 'product_categories.created_at', 'product_subcategories.name as sub_name')    
         ->where('product_categories.deleted_at', null);
 
         if ($request->id != '') {
 
             $id = $request->id;
-            $search->where('id', $id);
+            $search->where('product_subcategories.id', $id);
         }
 
         if ($request->free_word != '') {
@@ -100,7 +100,7 @@ class AdminController extends Controller
             $search->orderBy('id', 'desc');
         }
 
-        $categories = $search->paginate(10);
+        $categories = $search->groupBy('product_categories.id')->paginate(10);
 
         return view('admin.category_list', ['categories' => $categories]);
     }
