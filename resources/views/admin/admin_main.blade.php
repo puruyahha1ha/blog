@@ -40,5 +40,6 @@
 @section('main')
     <div class="detail_button">
         <a href="{{ route('admin.list') }}">会員一覧</a>
+        <a href="{{ route('admin.category_list') }}">商品カテゴリ一覧</a>
     </div>
 @endsection

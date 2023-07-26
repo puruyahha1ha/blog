@@ -30,7 +30,7 @@
 @endsection
 @section('main')
 
-<a href="{{ route('admin.list.regist') }}" class="list_regist">会員登録</a>
+<a href="{{ route('admin.list.edit') }}" class="list_regist">会員登録</a>
     <form action="{{ route('admin.list') }}" method="get">
         {{-- 検索フォーム --}}
         <div class="search_form">

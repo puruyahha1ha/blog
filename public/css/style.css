@@ -294,6 +294,7 @@ li span {
 
 .detail_button {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
 }
 

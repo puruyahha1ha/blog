@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Member;
+use App\Product_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -70,16 +71,45 @@ class AdminController extends Controller
         return view('admin.list', ['members' => $members]);
     }
 
-    public function memberRegist(Request $request)
+    public function showCategoryList(Request $request)
     {
-        return view('admin.regist');
+        $search = Product_category::query();
+        $search->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id')
+        ->select('product_categories.*', 'product_subcategories.name as sub_name')    
+        ->where('product_categories.deleted_at', null);
+
+        if ($request->id != '') {
+
+            $id = $request->id;
+            $search->where('id', $id);
+        }
+
+        if ($request->free_word != '') {
+            $free_word = $request->free_word;
+            $search->where(function ($search) use ($free_word) {
+                $search->where('product_categories.name', 'like', '%' . $free_word . '%')
+                    ->orwhere('product_subcategories.name', 'like', '%' . $free_word . '%');
+            });
+        }
+
+        if (!empty($request->sort) && !empty($request->direction)) {
+            $sort = $request->sort;
+            $direction = $request->direction;
+            $search->orderBy($sort, $direction);
+        } else {
+            $search->orderBy('id', 'desc');
+        }
+
+        $categories = $search->paginate(10);
+
+        return view('admin.category_list', ['categories' => $categories]);
     }
 
     public function memberEdit(Request $request)
     {
         $id = $request->id;
 
-        $member = Member::where(['id' => $id,'deleted_at' => null])->first();
+        $member = Member::where(['id' => $id, 'deleted_at' => null])->first();
 
         return view('admin.edit', ['member' => $member]);
     }
@@ -88,13 +118,14 @@ class AdminController extends Controller
     {
         $id = $request->id;
 
-        $member = Member::where(['id' => $id,'deleted_at' => null])->first();
+        $member = Member::where(['id' => $id, 'deleted_at' => null])->first();
 
         return view('admin.detail', ['member' => $member]);
     }
 
     public function toMemberConfirm(Request $request)
     {
+        dd($request->from);
         $inputs = $request->all();
         if ($request->from == 'regist') {
             $this->registValidator($request->only('name_sei', 'name_mei', 'nickname', 'gender', 'password', 'password_confirmation', 'email'))->validate();
@@ -158,7 +189,7 @@ class AdminController extends Controller
         $id = $request->id;
 
         Member::where('id', $id)->update(['deleted_at' => now()]);
-        
+
         return redirect()->route('admin.list');
     }
 
