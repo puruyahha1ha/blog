@@ -64,7 +64,7 @@
             @foreach ($categories as $val)
                 <tr>
                     <th>{{ $val->id }}</th>
-                    <th><a href="{{ route('admin.category_list.detail', ['id' => $val->name]) }}"
+                    <th><a href="{{ route('admin.category_list.detail', ['id' => $val->id]) }}"
                             style="text-decoration: none; color:blue">{{ $val->name }}</a>
                     </th>
                     <th>

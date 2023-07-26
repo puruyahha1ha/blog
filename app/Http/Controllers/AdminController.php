@@ -223,9 +223,21 @@ class AdminController extends Controller
         $id = $request->id;
 
         $product_category = Product_category::where(['id' => $id, 'deleted_at' => null])->first();
+        $product_subcategory = Product_subcategory::where(['product_category_id' => $id, 'deleted_at' => null])->get()->all();
 
-        return view('admin.category_detail', ['product_category' => $product_category]);
+        return view('admin.category_detail', ['product_category' => $product_category, 'product_subcategory' => $product_subcategory]);
     }
+
+    public function categoryDetailDelete(Request $request)
+    {
+        $id = $request->id;
+
+        Product_category::where('id', $id)->update(['deleted_at' => now()]);
+        Product_subcategory::where('product_category_id', $id)->update(['deleted_at' => now()]);
+
+        return redirect()->route('admin.category_list');
+    }
+
 
     public function toCategoryConfirm(Request $request)
     {
@@ -259,7 +271,6 @@ class AdminController extends Controller
                     ]);
                 }
             }
-            
         } else {
 
             $main_category_id = Product_category::select('id')->where('name', $request->name)->first();

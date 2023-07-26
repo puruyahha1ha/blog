@@ -102,6 +102,7 @@ Route::post('admin/list/complete', 'AdminController@memberComplete')->name('admi
 Route::get('admin/category_list', 'AdminController@showCategoryList')->name('admin.category_list');
 Route::get('admin/category_list/edit', 'AdminController@categoryEdit')->name('admin.category_list.edit');
 Route::get('admin/category_list/detail', 'AdminController@categoryDetail')->name('admin.category_list.detail');
+Route::post('admin/category_list/detail/detele', 'AdminController@categoryDetailDelete')->name('admin.category_list.detail.delete');
 
 Route::post('admin/category_list/confirm', 'AdminController@toCategoryConfirm')->name('admin.category_list.confirm');
 
