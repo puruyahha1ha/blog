@@ -7,7 +7,6 @@ use App\Product_category;
 use App\Product_subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -273,10 +272,11 @@ class AdminController extends Controller
             }
         } else {
 
-            $main_category_id = Product_category::select('id')->where('name', $request->name)->first();
+            $main_category_id = Product_category::select('id')->where('id', $request->id)->first();
 
-            Product_subcategory::query()->delete('product_category_id', $request->id);
-
+            if ($request->id != null) {
+                Product_subcategory::where('product_category_id', $request->id)->delete();
+            }
             for ($i = 1; $i <= 10; $i++) {
                 $name = "sub_name$i";
                 if (!empty($request->$name)) {
@@ -318,6 +318,7 @@ class AdminController extends Controller
         return redirect()->route('admin.login');
     }
 
+    
     protected function registValidator(array $data)
     {
         return Validator::make($data, [

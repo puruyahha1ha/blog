@@ -5,13 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
 
 class Product_subcategory extends Authenticatable
 {
     use Notifiable;
-    use SoftDeletes;
     use Sortable;
 
     /**
@@ -42,7 +40,7 @@ class Product_subcategory extends Authenticatable
     ];
 
     protected $table = 'product_subcategories';
-    protected $datas = ['created_at', 'updated_at', 'deleted_at'];
+    protected $datas = ['created_at', 'updated_at'];
     public $sortable = ['id', 'created_at'];
 
 }
