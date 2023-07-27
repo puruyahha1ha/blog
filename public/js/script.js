@@ -45,9 +45,9 @@ $('#image_1').change(function () {
         processData: false,
         contentType: false,
     }).done(function (result) {
-        document.getElementById('image_1_preview').src = 'storage/' + result['file_name'];
+        document.getElementById('image_1_preview').src = '/storage/' + result['file_name'];
         document.getElementById('image_1_preview').style = 'width: 250px; height: 250px;';
-        document.getElementById('hi_image_1').value = 'storage/' + result['file_name'];
+        document.getElementById('hi_image_1').value = '/storage/' + result['file_name'];
     })
 })
 
@@ -75,9 +75,9 @@ $('#image_2').change(function () {
         processData: false,
         contentType: false,
     }).done(function (result) {
-        document.getElementById('image_2_preview').src = 'storage/' + result['file_name'];
+        document.getElementById('image_2_preview').src = '/storage/' + result['file_name'];
         document.getElementById('image_2_preview').style = 'width: 250px; height: 250px;';    
-        document.getElementById('hi_image_2').value = 'storage/' + result['file_name'];
+        document.getElementById('hi_image_2').value = '/storage/' + result['file_name'];
     })
 })
 
@@ -105,9 +105,9 @@ $('#image_3').change(function () {
         processData: false,
         contentType: false,
     }).done(function (result) {
-        document.getElementById('image_3_preview').src = 'storage/' + result['file_name'];
+        document.getElementById('image_3_preview').src = '/storage/' + result['file_name'];
         document.getElementById('image_3_preview').style = 'width: 250px; height: 250px;';
-        document.getElementById('hi_image_3').value = 'storage/' + result['file_name'];
+        document.getElementById('hi_image_3').value = '/storage/' + result['file_name'];
     })
 })
 
@@ -135,9 +135,9 @@ $('#image_4').change(function () {
         processData: false,
         contentType: false,
     }).done(function (result) {
-        document.getElementById('image_4_preview').src = 'storage/' + result['file_name'];
+        document.getElementById('image_4_preview').src = '/storage/' + result['file_name'];
         document.getElementById('image_4_preview').style = 'width: 250px; height: 250px;';
-        document.getElementById('hi_image_4').value = 'storage/' + result['file_name'];
+        document.getElementById('hi_image_4').value = '/storage/' + result['file_name'];
     })
 })
 

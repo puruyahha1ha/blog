@@ -120,4 +120,5 @@ Route::post('admin/product/complete', 'AdminProductController@productComplete')-
 Route::get('admin/product/detail', 'AdminProductController@toProductDetail')->name('admin.product.detail');
 Route::post('admin/product/detail/detele', 'AdminProductController@productDetailDelete')->name('admin.product.detail.delete');
 
-Route::get('admin/product/select', 'AdminProductController@fetch');
+Route::POST('admin/product/select', 'AdminProductController@fetch');
+Route::post('admin/product/upload', 'AdminProductController@upload');

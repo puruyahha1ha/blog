@@ -157,6 +157,7 @@ return [
         'comment' => '商品コメント',
         'auth_code' => '認証コード',
         'login_id' => 'ログインID',
+        'product_content' => '商品説明'
     ],
 
 ];

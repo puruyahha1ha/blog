@@ -43,11 +43,42 @@
             @endif
         </div>
 
+        {{-- 会員名 --}}
+        <div class="form_row">
+            <p>会員名</p>
+            <select name="member_id" id="">
+                <option value="0">選択してください</option>
+                @foreach ($members as $val)
+                    @if (!empty($product))
+                        @if ($val->id == old('member_id', $product->member_id))
+                            <option value="{{ $val->id }}" selected>{{ $val->name_sei }}　{{ $val->name_mei }}</option>
+                        @else
+                            <option value="{{ $val->id }}">{{ $val->name_sei }}　{{ $val->name_mei }}</option>
+                        @endif
+                    @else
+                        @if ($val->id == old('member_id'))
+                            <option value="{{ $val->id }}" selected>{{ $val->name_sei }}　{{ $val->name_mei }}
+                            </option>
+                        @else
+                            <option value="{{ $val->id }}">{{ $val->name_sei }}　{{ $val->name_mei }}</option>
+                        @endif
+                    @endif
+                @endforeach
+
+            </select>
+        </div>
+
+        {{-- 会員名のエラーメッセージ --}}
+        @error('member_id')
+            <div class="error">{{ $message }}</div>
+        @enderror
+
+
         {{-- 商品名 --}}
         <div class="form_row">
             <p>商品名</p>
             <input type="text" name="name"
-                value="@if (empty($product)) @elseif(old('name')){{ old('name') }}@else{{ $product->name }} @endif">
+                @if (empty($product)) value="{{ old('name') }}" @else value="{{ old('name', $product->name) }}" @endif>
         </div>
 
         {{-- 商品名のエラーメッセージ --}}
@@ -63,36 +94,85 @@
             <select name="product_category_id" id="category_id">
                 <option value="0">選択してください</option>
                 @foreach ($product_categories as $val)
-                    @if ($val->id == old('product_category_id'))
-                        <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                    @if (!empty($product))
+                        @if ($val->id == old('product_category_id', $product->product_category_id))
+                            <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                        @else
+                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @endif
                     @else
-                        <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @if ($val->id == old('product_category_id'))
+                            <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                        @else
+                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @endif
                     @endif
                 @endforeach
             </select>
 
             {{-- サブのカテゴリ --}}
-            <select name="product_subcategory_id" id="subcategory_id"></select>
+            <select name="product_subcategory_id" id="subcategory_id">
+                @if (!empty($product_subcategories))
+                    @foreach ($product_subcategories as $val)
+                        @if ($val->id == old('product_subcategory_id', $product->product_subcategory_id))
+                            <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                        @else
+                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @endif
+                    @endforeach
+                @endif
+            </select>
         </div>
 
+        {{-- 商品のメインカテゴリのエラーメッセージ --}}
+        @error('product_category_id')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
-        <div class="form_row" style="height: auto">
-            <p>商品小カテゴリ</p>
-            <div class="inputs">
+        {{-- 商品のサブカテゴリのエラーメッセージ --}}
+        @error('product_subcategory_id')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
-                @for ($i = 1; $i <= 10; $i++)
-                    {{-- 小カテゴリ --}}
-                    <input type="text" name="sub_name{{ $i }}"
-                        value="@if (empty($product_subcategory[$i - 1])) @elseif(old("sub_name$i")){{ old("sub_name$i") }}@else{{ $product_subcategory[$i - 1]->name }} @endif"
-                        style="margin-bottom: 10px">
-                    {{-- 小カテゴリのエラーメッセージ --}}
-                    @error("sub_name$i")
-                        <div class="error" style="margin: 10px 0">{{ $message }}</div>
-                    @enderror
+        {{-- 商品写真 --}}
+        <div class="form_row_img">
+            <p>商品写真</p>
+            <div class="img_block">
+                @for ($i = 1; $i <= 4; $i++)
+                    @php
+                        $image_name = "image_$i";
+                    @endphp
+                    <p>写真{{ $i }}</p>
+                    <img id="image_{{ $i }}_preview"
+                        @if (empty($product->$image_name)) @if (old("image_$i")) 
+                                src="{{ old("image_$i") }}"
+                                style="width: 250px; height: 250px"
+                            @else
+                                src=""
+                                style="" @endif
+                    @else src="{{ old("image_$i", $product->$image_name) }}" style="width: 250px; height: 250px"
+                        @endif
+                    >
+                    <label for="image_{{ $i }}">
+                        <span class="upload_button">アップロード</span><input type="file" id="image_{{ $i }}"
+                            accept="image/gif, image/png, image/jpeg">
+                    </label>
+                    <input type="hidden" @if(!empty($product)) value="{{ old("image_$i", $product->$image_name) }}" @else value="{{ old("image_$i") }}" @endif
+                        name="image_{{ $i }}" id="hi_image_{{ $i }}">
                 @endfor
-
             </div>
         </div>
+
+        {{-- 商品説明 --}}
+        <div class="form_row_text">
+            <p>商品説明</p>
+            <textarea name="product_content" cols="50" rows="10">@if (empty($product)){{ old('product_content') }}@else{{ old('product_content', $product->product_content) }}@endif</textarea>
+        </div>
+
+        {{-- 商品名のエラーメッセージ --}}
+        @error('product_content')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
         <input type="hidden" name="from" value="@if (request()->query('id')) edit @else regist @endif">
 
