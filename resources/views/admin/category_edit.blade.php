@@ -36,8 +36,7 @@
             <p>商品大カテゴリID</p>
             @if (!empty($product_category))
                 <p>{{ $product_category->id }}</p>
-                <input type="hidden" name="id"
-                    value="@if (old('id')){{ old('id') }}@else{{ $product_category->id }}@endif">
+                <input type="hidden" name="id" value="{{ old('id', $product_category->id) }}">
             @else
                 <p>登録後に自動採番</p>
             @endif
@@ -47,7 +46,7 @@
         <div class="form_row">
             <p>商品大カテゴリ</p>
             <input type="text" name="name"
-                value="@if (empty($product_category))@elseif(old('name')){{ old('name') }}@else{{ $product_category->name }}@endif">
+                @if (!empty($product_category)) value="{{ old('name', $product_category->name) }}"@else value="{{ old('name') }}" @endif>
         </div>
 
         {{-- 商品大カテゴリのエラーメッセージ --}}
@@ -63,7 +62,10 @@
                 @for ($i = 1; $i <= 10; $i++)
                     {{-- 小カテゴリ --}}
                     <input type="text" name="sub_name{{ $i }}"
-                        value="@if (empty($product_subcategory[$i - 1]))@elseif(old("sub_name$i")){{ old("sub_name$i") }}@else{{ $product_subcategory[$i - 1]->name }}@endif" style="margin-bottom: 10px">
+                        @if (empty($product_subcategory[$i - 1])) value="{{ old("sub_name$i") }}" 
+                        @else 
+                            value="{{ old("sub_name$i", $product_subcategory[$i - 1]->name) }}" @endif
+                        style="margin-bottom: 10px">
                     {{-- 小カテゴリのエラーメッセージ --}}
                     @error("sub_name$i")
                         <div class="error" style="margin: 10px 0">{{ $message }}</div>

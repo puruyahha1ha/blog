@@ -37,7 +37,7 @@
             @if (!empty($product))
                 <p>{{ $product->id }}</p>
                 <input type="hidden" name="id"
-                    value="@if (old('id')){{ old('id') }}@else{{ $product->id }}@endif">
+                    value="@if (old('id')) {{ old('id') }}@else{{ $product->id }} @endif">
             @else
                 <p>登録後に自動採番</p>
             @endif
@@ -47,7 +47,7 @@
         <div class="form_row">
             <p>商品名</p>
             <input type="text" name="name"
-                value="@if (empty($product))@elseif(old('name')){{ old('name') }}@else{{ $product->name }}@endif">
+                value="@if (empty($product)) @elseif(old('name')){{ old('name') }}@else{{ $product->name }} @endif">
         </div>
 
         {{-- 商品名のエラーメッセージ --}}
@@ -70,10 +70,12 @@
                     @endif
                 @endforeach
             </select>
+
+            {{-- サブのカテゴリ --}}
+            <select name="product_subcategory_id" id="subcategory_id"></select>
         </div>
 
 
-        {{-- 商品小カテゴリ --}}
         <div class="form_row" style="height: auto">
             <p>商品小カテゴリ</p>
             <div class="inputs">
@@ -81,7 +83,8 @@
                 @for ($i = 1; $i <= 10; $i++)
                     {{-- 小カテゴリ --}}
                     <input type="text" name="sub_name{{ $i }}"
-                        value="@if (empty($product_subcategory[$i - 1]))@elseif(old("sub_name$i")){{ old("sub_name$i") }}@else{{ $product_subcategory[$i - 1]->name }}@endif" style="margin-bottom: 10px">
+                        value="@if (empty($product_subcategory[$i - 1])) @elseif(old("sub_name$i")){{ old("sub_name$i") }}@else{{ $product_subcategory[$i - 1]->name }} @endif"
+                        style="margin-bottom: 10px">
                     {{-- 小カテゴリのエラーメッセージ --}}
                     @error("sub_name$i")
                         <div class="error" style="margin: 10px 0">{{ $message }}</div>
@@ -98,4 +101,8 @@
         </div>
 
     </form>
+
+    {{-- jsファイルの読み込み --}}
+    <script src="{{ asset('js/adminScript.js') }}"></script>
+
 @endsection

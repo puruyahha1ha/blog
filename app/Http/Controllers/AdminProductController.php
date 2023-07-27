@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Product_category;
 use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
@@ -59,7 +60,9 @@ class AdminProductController extends Controller
             ->where('products.id', $id)
             ->first();
 
-        return view('admin.product.edit', ['product' => $product]);
+        $product_categories = Product_category::query()->get();
+
+        return view('admin.product.edit', ['product' => $product, 'product_categories' => $product_categories]);
     }
 
     public function toProductConfirm()
@@ -76,5 +79,13 @@ class AdminProductController extends Controller
 
     public function productDetailDelete()
     {
+    }
+
+    public function fetch(Request $request)
+    {
+        $product_category_id = $request['product_category_id'];
+        dd($request->product_category_id);
+        $product_subcategories = DB::table('product_subcategories')->where('product_category_id', $product_category_id)->get();
+        return $product_subcategories;
     }
 }

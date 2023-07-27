@@ -20,7 +20,7 @@
 @endsection
 @section('header_class', 'login_header')
 @section('header')
-    @if (request()->query('id')) 
+    @if (request()->query('id'))
         <p>会員編集</p>
     @else
         <p>会員登録</p>
@@ -48,10 +48,10 @@
             <p>氏名</p>
             <span>姓</span>
             <input type="text" name="name_sei"
-                value="@if (empty($member))@elseif (old('name_sei')) {{ old('name_sei') }}@else{{ $member->name_sei }} @endif">
+                @if (empty($member)) value="{{ old('name_sei') }}" @else value="{{ old('name_sei', $member->name_sei) }}" @endif>
             <span>名</span>
             <input type="text" name="name_mei"
-                value="@if (empty($member))@elseif (old('name_mei')) {{ old('name_mei') }}@else{{ $member->name_mei }} @endif">
+                @if (empty($member)) value="{{ old('name_mei') }}" @else value="{{ old('name_mei', $member->name_mei) }}" @endif>
         </div>
 
         {{-- 姓のエラーメッセージ --}}
@@ -68,7 +68,7 @@
         <div class="form_row">
             <p>ニックネーム</p>
             <input type="text" name="nickname"
-                value="@if (empty($member))@elseif (old('nickname')){{ old('nickname') }}@else{{ $member->nickname }}@endif">
+                @if (empty($member)) value="{{ old('nickname') }}" @else value="{{ old('nickname', $member->nickname) }}" @endif">
         </div>
 
         {{-- ニックネームのエラーメッセージ --}}
@@ -81,7 +81,7 @@
             <p>性別</p>
             @foreach (Config('master.gender') as $key => $value)
                 <input type="radio" name="gender" value="{{ $key }}" id="{{ $value }}"
-                    @if (empty($member))@elseif (old('gender') == $key) checked @elseif ($member->gender == $key) checked @endif>
+                    @if (empty($member)) @elseif (old('gender', $member->gender) == $key) checked  @endif>
                 <label for="{{ $value }}">{{ $value }}</label>
             @endforeach
         </div>
@@ -117,7 +117,7 @@
         <div class="form_row">
             <p>メールアドレス</p>
             <input type="text" name="email"
-                value="@if (empty($member))@elseif (old('email')){{ old('email') }}@else{{ $member->email }}@endif">
+                @if (empty($member)) value="{{ old('email') }}" @else value="{{ old('email', $member->email) }}" @endif">
         </div>
 
         {{-- メールアドレスのエラーメッセージ --}}
