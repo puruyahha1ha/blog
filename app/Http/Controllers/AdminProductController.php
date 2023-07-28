@@ -6,6 +6,7 @@ use App\Member;
 use App\Product;
 use App\Product_category;
 use App\Product_subcategory;
+use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,16 +67,9 @@ class AdminProductController extends Controller
 
         $members = Member::query()->where('deleted_at', null)->get();
         $product_categories = Product_category::query()->where('deleted_at', null)->get();
+        $product_subcategories = Product_subcategory::query()->where('deleted_at', null)->get();
 
-        if ($product == null) {
-            // 登録時
-            $product_subcategories = [];
-        } else {
-            // 編集時
-            $product_subcategories = Product_subcategory::query()->where('product_category_id', $product->product_category_id)->where('deleted_at', null)->get();
-        }
-
-
+        // dd(!empty($product));
         return view('admin.product.edit', ['product' => $product, 'members' => $members, 'product_categories' => $product_categories, 'product_subcategories' => $product_subcategories]);
     }
 
@@ -126,12 +120,32 @@ class AdminProductController extends Controller
         return redirect()->route('admin.product.list');
     }
 
-    public function toProductDetail()
+    public function toProductDetail(Request $request)
     {
+        $id = $request->id;
+
+        $product = Product::query()
+            ->join('product_categories', 'products.product_category_id', '=', 'product_categories.id')
+            ->join('product_subcategories', 'products.product_subcategory_id', '=', 'product_subcategories.id')
+            ->join('members', 'products.member_id', '=', 'members.id')
+            ->select('products.*', 'product_categories.name as main_name', 'product_subcategories.name as sub_name', 'members.name_mei')
+            ->where('products.id', $id)
+            ->first();
+
+        $average = Review::query()->where('product_id', $id)->avg('evaluation');
+
+        $reviews = Review::query()->leftjoin('members', 'reviews.member_id', '=', 'members.id')->select('reviews.*', 'members.name_sei', 'members.name_mei')->where('product_id', $id)->orderBy('id', 'asc')->paginate(3);
+
+        return view('admin.product.detail', ['product' => $product, 'average' => $average, 'reviews' => $reviews]);
     }
 
-    public function productDetailDelete()
+    public function productDetailDelete(Request $request)
     {
+        $id = $request->id;
+
+        Product::query()->where('id', $id)->update(['deleted_at' => now()]);
+
+        return redirect()->route('admin.product.list');
     }
 
     public function fetch(Request $request)

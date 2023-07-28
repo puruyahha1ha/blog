@@ -118,7 +118,7 @@ class AdminController extends Controller
     {
         $id = $request->id;
 
-        $member = Member::where(['id' => $id, 'deleted_at' => null])->first();
+        $member = Member::where(['id' => $id])->first();
 
         return view('admin.detail', ['member' => $member]);
     }

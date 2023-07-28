@@ -112,12 +112,24 @@
 
             {{-- サブのカテゴリ --}}
             <select name="product_subcategory_id" id="subcategory_id">
-                @if (!empty($product_subcategories))
+                @if (!empty($product))
                     @foreach ($product_subcategories as $val)
-                        @if ($val->id == old('product_subcategory_id', $product->product_subcategory_id))
-                            <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
-                        @else
-                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                        @if ($val->product_category_id == $product->product_category_id)
+                            @if ($val->id == old('product_subcategory_id', $product->product_subcategory_id))
+                                <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                            @else
+                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                            @endif
+                        @endif
+                    @endforeach
+                @else
+                    @foreach ($product_subcategories as $val)
+                        @if (old('product_category_id') && old('product_category_id') == $val->product_category_id)
+                            @if ($val->id == old('product_subcategory_id'))
+                                <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                            @else
+                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                            @endif
                         @endif
                     @endforeach
                 @endif
@@ -157,7 +169,8 @@
                         <span class="upload_button">アップロード</span><input type="file" id="image_{{ $i }}"
                             accept="image/gif, image/png, image/jpeg">
                     </label>
-                    <input type="hidden" @if(!empty($product)) value="{{ old("image_$i", $product->$image_name) }}" @else value="{{ old("image_$i") }}" @endif
+                    <input type="hidden"
+                        @if (!empty($product)) value="{{ old("image_$i", $product->$image_name) }}" @else value="{{ old("image_$i") }}" @endif
                         name="image_{{ $i }}" id="hi_image_{{ $i }}">
                 @endfor
             </div>
@@ -166,7 +179,9 @@
         {{-- 商品説明 --}}
         <div class="form_row_text">
             <p>商品説明</p>
-            <textarea name="product_content" cols="50" rows="10">@if (empty($product)){{ old('product_content') }}@else{{ old('product_content', $product->product_content) }}@endif</textarea>
+            <textarea name="product_content" cols="50" rows="10">
+@if (empty($product)){{ old('product_content') }}@else{{ old('product_content', $product->product_content) }}@endif
+</textarea>
         </div>
 
         {{-- 商品名のエラーメッセージ --}}
