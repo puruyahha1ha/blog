@@ -29,7 +29,7 @@
     @else
         <p>商品編集確認</p>
     @endif
-    <a href="/admin/product">一覧へ戻る</a>
+    <a href="/admin/product/list">一覧へ戻る</a>
 @endsection
 @section('main')
     <form method="POST" action="{{ route('admin.product.complete') }}">

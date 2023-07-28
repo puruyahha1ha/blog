@@ -114,11 +114,19 @@
             <select name="product_subcategory_id" id="subcategory_id">
                 @if (!empty($product))
                     @foreach ($product_subcategories as $val)
-                        @if ($val->product_category_id == $product->product_category_id)
-                            @if ($val->id == old('product_subcategory_id', $product->product_subcategory_id))
+                        @if (old('product_category_id') && old('product_category_id') == $val->product_category_id)
+                            @if ($val->id == old('product_subcategory_id'))
                                 <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
                             @else
                                 <option value="{{ $val->id }}">{{ $val->name }}</option>
+                            @endif
+                        @else
+                            @if ($val->product_category_id == $product->product_category_id)
+                                @if ($val->id == old('product_subcategory_id', $product->product_subcategory_id))
+                                    <option value="{{ $val->id }}" selected>{{ $val->name }}</option>
+                                @else
+                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                @endif
                             @endif
                         @endif
                     @endforeach
@@ -192,7 +200,7 @@
         <input type="hidden" name="from" value="@if (request()->query('id')) edit @else regist @endif">
 
         <div class="search_button">
-            <input type="submit" name="confirm" value="確認画面へ">
+            <input type="submit"　value="確認画面へ">
         </div>
 
     </form>

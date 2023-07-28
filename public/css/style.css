@@ -541,3 +541,20 @@ th a {
     display: flex;
     flex-direction: column;
 }
+
+/* 商品レビュー登録・編集画面 */
+.search_button_re {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.search_button_re input,
+.search_button_re button {
+    color: #ffffff;
+    background-color: #2f5496;
+    width: 200px;
+    height: 50px;
+    border-color: #2f5496;
+    border-radius: 10px;
+}

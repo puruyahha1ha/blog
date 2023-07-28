@@ -69,7 +69,6 @@ class AdminProductController extends Controller
         $product_categories = Product_category::query()->where('deleted_at', null)->get();
         $product_subcategories = Product_subcategory::query()->where('deleted_at', null)->get();
 
-        // dd(!empty($product));
         return view('admin.product.edit', ['product' => $product, 'members' => $members, 'product_categories' => $product_categories, 'product_subcategories' => $product_subcategories]);
     }
 

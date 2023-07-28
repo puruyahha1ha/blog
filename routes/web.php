@@ -110,6 +110,7 @@ Route::post('admin/category_list/complete', 'AdminController@categoryComplete')-
 Route::get('admin/category_list/detail', 'AdminController@categoryDetail')->name('admin.category_list.detail');
 Route::post('admin/category_list/detail/detele', 'AdminController@categoryDetailDelete')->name('admin.category_list.detail.delete');
 
+
 // 商品一覧
 Route::get('admin/product/list', 'AdminProductController@showProductList')->name('admin.product.list');
 
@@ -120,5 +121,19 @@ Route::post('admin/product/complete', 'AdminProductController@productComplete')-
 Route::get('admin/product/detail', 'AdminProductController@toProductDetail')->name('admin.product.detail');
 Route::post('admin/product/detail/detele', 'AdminProductController@productDetailDelete')->name('admin.product.detail.delete');
 
-Route::POST('admin/product/select', 'AdminProductController@fetch');
+Route::post('admin/product/select', 'AdminProductController@fetch');
 Route::post('admin/product/upload', 'AdminProductController@upload');
+
+
+// 商品レビュー一覧
+Route::get('admin/review/list', 'AdminReviewController@showReviewList')->name('admin.review.list');
+
+Route::get('admin/review/edit', 'AdminReviewController@reviewEdit')->name('admin.review.edit');
+Route::post('admin/review/confirm', 'AdminReviewController@toReviewConfirm')->name('admin.review.confirm');
+Route::post('admin/review/complete', 'AdminReviewController@reviewComplete')->name('admin.review.complete');
+
+Route::get('admin/review/detail', 'AdminReviewController@toReviewDetail')->name('admin.review.detail');
+Route::post('admin/review/detail/detele', 'AdminReviewController@reviewDetailDelete')->name('admin.review.detail.delete');
+
+Route::post('admin/review/select', 'AdminReviewController@fetch');
+Route::post('admin/review/upload', 'AdminReviewController@upload');

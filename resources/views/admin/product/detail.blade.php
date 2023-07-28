@@ -147,8 +147,6 @@
             <input type="hidden" name="id" value="{{ request()->query('id') }}">
             <input type="submit" value="削除">
         </form>
-
     </div>
-
 
 @endsection
