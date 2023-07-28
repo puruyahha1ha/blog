@@ -144,6 +144,7 @@ class AdminProductController extends Controller
         $id = $request->id;
 
         Product::query()->where('id', $id)->update(['deleted_at' => now()]);
+        Review::query()->where('product_id', $id)->update(['deleted_at' => now()]);
 
         return redirect()->route('admin.product.list');
     }

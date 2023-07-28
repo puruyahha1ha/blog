@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Product_category;
 use App\Product_subcategory;
+use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -186,6 +187,7 @@ class AdminController extends Controller
         $id = $request->id;
 
         Member::where('id', $id)->update(['deleted_at' => now()]);
+        Review::where('member_id', $id)->update(['deleted_at' => now()]);
 
         return redirect()->route('admin.list');
     }
