@@ -68,7 +68,9 @@
                     <th>{{ $val->id }}</th>
                     <th>{{ $val->product_id }}</th>
                     <th>{{ $val->evaluation }}</th>
-                    <th>{{ $val->comment }}</th>
+                    <th><a href="{{ route('admin.review.detail', ['id' => $val->id]) }}"
+                            style="text-decoration: none; color:blue">{{ $val->comment }}</a>
+                    </th>
                     <th>
                         @if ($val->created_at != null)
                             {{ $val->created_at->format('Y/m/d') }}
@@ -76,7 +78,8 @@
                     </th>
                     <th style="border-left:black solid 1px"><a href="{{ route('admin.review.edit', ['id' => $val->id]) }}"
                             style="text-decoration: none; color:blue">編集</a></th>
-                    <th style="border-left:black solid 1px"><a href="{{ route('admin.review.detail', ['id' => $val->id]) }}"
+                    <th style="border-left:black solid 1px"><a
+                            href="{{ route('admin.review.detail', ['id' => $val->id]) }}"
                             style="text-decoration: none; color:blue">詳細</a></th>
                 </tr>
             @endforeach
